@@ -1,0 +1,16 @@
+# Ignore personal resume data (PII)
+src/*
+!src/demo/
+
+# Ignore generated resumes
+res/*
+!res/demo/
+
+# Ignore generated architecture diagrams
+proj_svg/
+
+# MacOS specific
+.DS_Store
+
+# Node.js
+node_modules/

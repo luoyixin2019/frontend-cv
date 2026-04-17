@@ -1,0 +1,6 @@
+# Education Experience
+
+- 20xx.xx-20xx.xx：XX大学（学士）
+- 20xx.xx-20xx.xx：xx大学（硕士）
+- 20xx.xx-20xx.xx：xx大学（博士）
+
