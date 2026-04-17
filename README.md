@@ -1,6 +1,6 @@
-# CV Generator
+# Frontend CV
 
-A Trae IDE skill for generating advanced, print-friendly, multi-theme HTML resumes from structured Markdown files.
+A universal AI agent skill for generating advanced, print-friendly, multi-theme HTML resumes from structured Markdown files. Works with Trae IDE, Claude Code, and other agent platforms.
 
 <p align="center">
   <img src="docs/record.gif" width="80%" alt="Demo">
@@ -8,7 +8,7 @@ A Trae IDE skill for generating advanced, print-friendly, multi-theme HTML resum
 
 ## What This Does
 
-CV Generator converts a set of structured Markdown files (or pasted text) into a polished, responsive, and print-ready HTML resume — a single self-contained file with no external dependencies.
+Frontend CV converts a set of structured Markdown files (or pasted text) into a polished, responsive, and print-ready HTML resume — a single self-contained file with no external dependencies.
 
 It supports **3 distinctive themes**, **auto-generated SVG architecture diagrams** for project experience, and **single/double column layout** switching.
 
@@ -31,42 +31,43 @@ It supports **3 distinctive themes**, **auto-generated SVG architecture diagrams
 
 ## Installation
 
-### Option 1: Clone as a project (Recommended)
+### For Trae IDE
 
-Clone this repo anywhere and open it in Trae IDE. The `.trae/skills/cv-generator/` directory will be automatically recognized:
-
-```bash
-git clone https://github.com/<your-username>/cv-skill.git
-cd cv-skill
-# Open this folder in Trae IDE — the skill is ready to use
-```
-
-### Option 2: Install to global skills directory
-
-If you want the skill available across all projects:
+Clone to the global skills directory so the skill is available across all projects:
 
 ```bash
-# Clone to a temp directory
-git clone https://github.com/<your-username>/cv-skill.git /tmp/cv-skill
-
-# Copy the skill files to your global Trae skills directory
-mkdir -p ~/.trae/skills/cv-generator/template
-cp /tmp/cv-skill/.trae/skills/cv-generator/SKILL.md ~/.trae/skills/cv-generator/
-cp /tmp/cv-skill/.trae/skills/cv-generator/template/style.css ~/.trae/skills/cv-generator/template/
-cp /tmp/cv-skill/.trae/skills/cv-generator/template/script.js ~/.trae/skills/cv-generator/template/
-
-# Clean up
-rm -rf /tmp/cv-skill
+git clone https://github.com/luoyixin2019/frontend-cv.git ~/.trae/skills/frontend-cv
 ```
 
-Then invoke it in Trae IDE by typing `/cv-generator`.
+Or clone as a project and create a symlink:
+
+```bash
+git clone https://github.com/luoyixin2019/frontend-cv.git ~/code/frontend-cv
+ln -s ~/code/frontend-cv ~/.trae/skills/frontend-cv
+```
+
+Then invoke it by typing `/frontend-cv` in Trae IDE.
+
+### For Claude Code
+
+Clone to the Claude Code skills directory:
+
+```bash
+git clone https://github.com/luoyixin2019/frontend-cv.git ~/.claude/skills/frontend-cv
+```
+
+Then invoke it by typing `/frontend-cv` in Claude Code.
+
+### For Other Agents (Cursor, Windsurf, etc.)
+
+Copy `SKILL.md` and the `template/` directory to your agent's skill/rules directory, then reference it in your agent's configuration. The skill uses only relative paths and standard tool descriptions (Read, Write, LS), so it works with any agent that supports skill files.
 
 ## Usage
 
 ### Generate a Resume from Markdown Files
 
 ```
-/cv-generator
+/frontend-cv
 
 > "Generate my resume from ./src/demo/"
 ```
@@ -95,29 +96,33 @@ See `src/demo/` for an example.
 ## Included Themes
 
 ### Bold Signal (Default)
+
 Confident, high-impact. Vivid orange accent on dark background. Sharp edges, no border-radius.
 
 ### Terminal Green
+
 Developer-focused, hacker aesthetic. Green-on-dark with dashed borders and monospace fonts.
 
 ### Editorial
+
 Elegant, sophisticated. Cream background with classic red accent. Serif display font, rounded corners.
 
 ## Architecture
 
-| File | Purpose | Loaded When |
-|------|---------|-------------|
-| `SKILL.md` | Core workflow and rules | Always (skill invocation) |
-| `template/style.css` | Theme definitions, layout, print styles, SVG adaptation | Generation phase |
-| `template/script.js` | Theme/layout switching, scroll animations | Generation phase |
+This skill uses a flat directory structure — all skill files are at the repository root for maximum portability across agent platforms.
+
+| File                 | Purpose                                                 | Loaded When               |
+| -------------------- | ------------------------------------------------------- | ------------------------- |
+| `SKILL.md`           | Core workflow and rules                                 | Always (skill invocation) |
+| `template/style.css` | Theme definitions, layout, print styles, SVG adaptation | Generation phase          |
+| `template/script.js` | Theme/layout switching, scroll animations               | Generation phase          |
 
 ```
-cv-skill/
-├── .trae/skills/cv-generator/
-│   ├── SKILL.md                  # Skill definition
-│   └── template/
-│       ├── style.css             # All themes + layout + print + SVG adaptation
-│       └── script.js             # Theme/layout switcher + animations
+frontend-cv/
+├── SKILL.md                      # Skill definition (agent-agnostic)
+├── template/
+│   ├── style.css                 # All themes + layout + print + SVG adaptation
+│   └── script.js                 # Theme/layout switcher + animations
 ├── scripts/
 │   ├── screenshot.js             # Capture theme preview screenshots
 │   ├── export-pdf.sh             # Export resume to PDF
@@ -166,16 +171,13 @@ Uses Vercel (free tier). The script walks you through signup and login if it's y
 - **Design by reaction, not description.** Switch themes with one click and pick what feels right.
 - **Architecture diagrams tell the story.** A well-crafted SVG diagram communicates more than paragraphs of text.
 - **Print is not an afterthought.** Resumes are meant to be printed. Dedicated print styles ensure clean output.
+- **Agent-agnostic by design.** No hardcoded paths, no platform-specific tooling. Works everywhere.
 
 ## Requirements
 
-- Trae IDE (or Claude Code CLI with Trae skill support)
+- An AI agent that supports skill files (Trae IDE, Claude Code, Cursor, etc.)
 - For PDF export: Node.js + Playwright (installs automatically)
 - For URL deployment: Node.js + Vercel account (free)
-
-## Credits
-
-Created with Trae IDE.
 
 ## License
 

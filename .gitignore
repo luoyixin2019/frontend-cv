@@ -9,6 +9,9 @@ res/*
 # Ignore generated architecture diagrams
 proj_svg/
 
+# IDE
+.idea/
+
 # MacOS specific
 .DS_Store
 
