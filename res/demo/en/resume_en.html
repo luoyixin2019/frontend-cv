@@ -1,0 +1,2562 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="bold-signal" data-layout="double">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume | AI Agent Architect</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;600;700&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+/* ===========================================
+   BASE & RESET
+   =========================================== */
+   * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    min-height: 100vh;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+    background-color: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: clamp(14px, 1.2vw, 16px);
+    line-height: 1.6;
+    transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+/* ===========================================
+   THEME DEFINITIONS
+   =========================================== */
+
+/* 1. BOLD SIGNAL (Default) */
+[data-theme="bold-signal"] {
+    --bg: #111111;
+    --bg-alt: #1a1a1a;
+    --text: #e0e0e0;
+    --text-muted: #888888;
+    --accent: #FF4500;
+    --accent-hover: #ff6a33;
+    --border: #333333;
+    --card-bg: #161616;
+    
+    --font-display: 'Archivo Black', sans-serif;
+    --font-body: 'Space Grotesk', sans-serif;
+    
+    --radius: 0px;
+    --shadow: none;
+    --border-style: 1px solid var(--border);
+}
+
+/* 2. TERMINAL GREEN */
+[data-theme="terminal-green"] {
+    --bg: #0d1117;
+    --bg-alt: #161b22;
+    --text: #c9d1d9;
+    --text-muted: #8b949e;
+    --accent: #39d353;
+    --accent-hover: #4ade80;
+    --border: #30363d;
+    --card-bg: #0d1117;
+    
+    --font-display: 'JetBrains Mono', monospace;
+    --font-body: 'JetBrains Mono', monospace;
+    
+    --radius: 4px;
+    --shadow: none;
+    --border-style: 1px dashed var(--border);
+}
+
+/* 3. EDITORIAL */
+[data-theme="editorial"] {
+    --bg: #f8f5f0;
+    --bg-alt: #f0ebe1;
+    --text: #2c2c2c;
+    --text-muted: #666666;
+    --accent: #c43228;
+    --accent-hover: #9c261e;
+    --border: #dcd6cb;
+    --card-bg: #ffffff;
+    
+    --font-display: 'Fraunces', serif;
+    --font-body: 'DM Sans', sans-serif;
+    
+    --radius: 8px;
+    --shadow: 0 4px 20px rgba(0,0,0,0.03);
+    --border-style: 1px solid var(--border);
+}
+
+/* ===========================================
+   LAYOUT & GRID
+   =========================================== */
+.page-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: clamp(2rem, 5vw, 4rem);
+    position: relative;
+    z-index: 2;
+}
+
+.content-grid {
+    display: grid;
+    grid-template-columns: 340px 1fr;
+    gap: clamp(2rem, 4vw, 4rem);
+    margin-top: clamp(1rem, 2vw, 1.5rem);
+}
+
+@media (max-width: 900px) {
+    .content-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+[data-layout="single"] .content-grid {
+    grid-template-columns: 1fr;
+}
+
+[data-layout="single"] .left-col {
+    display: flex;
+    flex-direction: row;
+    gap: 2vw;
+}
+
+[data-layout="single"] .left-col .section {
+    margin-bottom: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+[data-layout="single"] .left-col .section:nth-of-type(1) {
+    flex: 3;
+}
+
+[data-layout="single"] .left-col .section:nth-of-type(2) {
+    flex: 1;
+}
+
+[data-layout="single"] .entries-group {
+    display: flex;
+    gap: 1.5vw;
+    flex: 1;
+    flex-direction: row;
+}
+
+[data-layout="single"] .left-col .section:nth-of-type(2) .entries-group {
+    flex-direction: column;
+    gap: 1rem;
+}
+
+[data-layout="single"] .entries-group .entry {
+    flex: 1;
+    margin-bottom: 0 !important;
+}
+
+@media (max-width: 768px) {
+    [data-layout="single"] .left-col {
+        flex-direction: column;
+    }
+    [data-layout="single"] .entries-group {
+        flex-direction: column;
+    }
+}
+
+/* ===========================================
+   TYPOGRAPHY & COMPONENTS
+   =========================================== */
+h1, h2, h3, .name, .section-title {
+    font-family: var(--font-display);
+    color: var(--text);
+}
+
+/* Header */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding-bottom: 2rem;
+    border-bottom: var(--border-style);
+    border-color: var(--text);
+}
+
+@media (max-width: 768px) {
+    .header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1.5rem;
+    }
+}
+
+.name {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    line-height: 1.1;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.5rem;
+}
+
+.title {
+    font-size: clamp(1.1rem, 1.5vw, 1.3rem);
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.tech-stack-header {
+    display: flex;
+    gap: 0.8rem;
+    flex-wrap: wrap;
+}
+
+.tag {
+    font-size: 0.85rem;
+    padding: 0.2rem 0.8rem;
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    border-radius: 999px;
+}
+
+.contact-info {
+    text-align: right;
+    font-size: 0.95rem;
+    color: var(--text-muted);
+}
+.contact-info p {
+    margin-bottom: 0.3rem;
+}
+@media (max-width: 768px) {
+    .contact-info { text-align: left; }
+}
+
+/* Sections */
+.section {
+    margin-bottom: 3rem;
+}
+
+.section-title {
+    font-size: clamp(1.2rem, 2vw, 1.5rem);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.section-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+}
+
+/* Entries (Left Col) */
+.entry {
+    margin-bottom: 1.5rem;
+}
+.entry-meta {
+    font-size: 0.85rem;
+    color: var(--accent);
+    margin-bottom: 0.2rem;
+    font-weight: 600;
+}
+.entry-title {
+    font-size: 1.1rem;
+    margin-bottom: 0.2rem;
+}
+.entry-role {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    margin-bottom: 0.5rem;
+}
+.entry-desc {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
+
+.skills-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+}
+.skill-pill {
+    background: var(--bg-alt);
+    border: var(--border-style);
+    padding: 0.4rem 0.8rem;
+    font-size: 0.9rem;
+    border-radius: var(--radius);
+}
+
+/* Project Cards (Right Col) */
+.project-card {
+    background: var(--card-bg);
+    border: var(--border-style);
+    border-radius: var(--radius);
+    padding: clamp(1.5rem, 3vw, 2rem);
+    margin-bottom: 1.5rem;
+    box-shadow: var(--shadow);
+    transition: transform 0.3s ease, border-color 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.project-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--accent);
+}
+
+.project-header {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+}
+
+.project-number {
+    font-family: var(--font-display);
+    font-size: 2rem;
+    line-height: 1;
+    color: var(--border);
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+.project-card:hover .project-number {
+    color: var(--accent);
+}
+
+.project-title-group {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    flex-wrap: wrap;
+}
+
+.project-title-group h3 {
+    font-size: clamp(1.2rem, 1.8vw, 1.4rem);
+    margin-bottom: 0;
+}
+
+.project-tag {
+    display: inline-block;
+    font-size: 0.8rem;
+    color: var(--bg);
+    background: var(--text);
+    padding: 0.1rem 0.6rem;
+    border-radius: 999px;
+    font-weight: 600;
+}
+
+.bullet-list {
+    list-style: none;
+}
+.bullet-list li {
+    position: relative;
+    padding-left: 1.2rem;
+    margin-bottom: 0.8rem;
+    color: var(--text-muted);
+}
+.bullet-list li::before {
+    content: '\2192';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-family: var(--font-display);
+}
+.highlight {
+    color: var(--text);
+    font-weight: 600;
+    border-bottom: 1px solid var(--accent);
+}
+strong {
+    color: var(--text);
+    font-weight: 600;
+}
+
+/* ===========================================
+   THEME SPECIFIC OVERRIDES
+   =========================================== */
+
+/* Terminal Specific */
+[data-theme="terminal-green"] .bullet-list li::before {
+    content: '>';
+}
+[data-theme="terminal-green"] .tag, 
+[data-theme="terminal-green"] .project-tag {
+    border-radius: 0;
+}
+[data-theme="terminal-green"] .name {
+    text-transform: none;
+}
+.cursor {
+    display: none;
+    color: var(--accent);
+    animation: blink 1s step-end infinite;
+}
+[data-theme="terminal-green"] .cursor {
+    display: inline;
+}
+@keyframes blink { 50% { opacity: 0; } }
+
+/* Editorial Specific */
+[data-theme="editorial"] .project-number {
+    display: none;
+}
+[data-theme="editorial"] .project-header {
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 0.8rem;
+}
+[data-theme="editorial"] .bullet-list li::before {
+    content: '\2022';
+}
+[data-theme="editorial"] .section-title {
+    text-transform: none;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 1.8rem;
+}
+
+/* Bold Signal Specific */
+[data-theme="bold-signal"] .project-tag {
+    background: var(--accent);
+    color: var(--bg);
+}
+
+
+/* ===========================================
+   FOOTER
+   =========================================== */
+.cv-footer {
+    text-align: center;
+    font-size: 0.65rem;
+    color: var(--text-muted);
+    opacity: 0.5;
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 1px dashed var(--border);
+}
+
+@media print {
+    .cv-footer { opacity: 0.6; }
+}
+
+/* ===========================================
+   THEME SWITCHER UI
+   =========================================== */
+.theme-switcher {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 100;
+    display: flex;
+    gap: 8px;
+    background: var(--bg-alt);
+    padding: 8px;
+    border: var(--border-style);
+    border-radius: var(--radius);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+.theme-btn, .print-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    cursor: pointer;
+    padding: 4px 8px;
+    transition: all 0.2s ease;
+}
+
+.theme-btn:hover, .print-btn:hover {
+    color: var(--text);
+}
+
+.theme-btn.active {
+    color: var(--accent);
+    font-weight: bold;
+}
+
+.switcher-divider {
+    width: 1px;
+    height: 16px;
+    background: var(--border);
+    align-self: center;
+}
+
+.layout-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    font-size: 1rem;
+    cursor: pointer;
+    padding: 2px 6px;
+    transition: all 0.2s ease;
+    line-height: 1;
+}
+
+.layout-btn:hover {
+    color: var(--text);
+}
+
+.layout-btn.active {
+    color: var(--accent);
+}
+
+@media (max-width: 768px) {
+    .theme-switcher {
+        top: auto;
+        bottom: 20px;
+        right: 50%;
+        transform: translateX(50%);
+        width: max-content;
+    }
+}
+
+/* ===========================================
+   DIAGRAM MODAL & TRIGGER
+   =========================================== */
+.diagram-trigger {
+    cursor: pointer;
+    font-size: 0.8rem;
+    background: var(--bg-alt);
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    padding: 0.1rem 0.5rem;
+    border-radius: 4px;
+    margin-left: 0.5rem;
+    display: inline-flex;
+    align-items: center;
+    transition: all 0.2s ease;
+    user-select: none;
+    vertical-align: middle;
+}
+
+.diagram-trigger:hover {
+    background: var(--accent);
+    color: var(--bg);
+}
+
+.diagram-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.85);
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    backdrop-filter: blur(5px);
+}
+
+.diagram-modal.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.diagram-modal-content {
+    max-width: 90vw;
+    max-height: 90vh;
+    background: white;
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    transform: scale(0.95);
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: auto;
+}
+
+.diagram-modal-body {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.diagram-modal-body svg,
+.diagram-modal-body img {
+    max-width: 100%;
+    max-height: 80vh;
+    height: auto;
+    object-fit: contain;
+}
+
+.diagram-modal.active .diagram-modal-content {
+    transform: scale(1);
+}
+
+.diagram-modal-close {
+    position: absolute;
+    top: -15px;
+    right: -15px;
+    width: 30px;
+    height: 30px;
+    background: var(--accent);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-weight: bold;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+/* ===========================================
+   ANIMATIONS (Staggered Reveals)
+   =========================================== */
+.reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Base stagger delays */
+.reveal:nth-child(1) { transition-delay: 0.1s; }
+.reveal:nth-child(2) { transition-delay: 0.2s; }
+.reveal:nth-child(3) { transition-delay: 0.3s; }
+.reveal:nth-child(4) { transition-delay: 0.4s; }
+.reveal:nth-child(5) { transition-delay: 0.5s; }
+
+/* ===========================================
+   PRINT STYLES
+   =========================================== */
+@media print {
+    .theme-switcher { display: none; }
+    .diagram-trigger, .diagram-modal { display: none !important; }
+    .header {
+        flex-direction: row !important;
+        align-items: flex-end !important;
+        gap: 0 !important;
+    }
+    .contact-info { text-align: right !important; }
+    body {
+        background: white !important;
+        color: black !important;
+    }
+    .page-container { padding: 0; max-width: 100%; }
+    .project-card { 
+        box-shadow: none; 
+        break-inside: avoid;
+        border-color: #ddd !important;
+    }
+    .reveal {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+    }
+    * {
+        font-family: 'Space Grotesk', 'DM Sans', sans-serif !important;
+    }
+    h1, h2, h3 {
+        font-family: 'Archivo Black', 'Fraunces', sans-serif !important;
+    }
+
+    [data-layout="single"] .content-grid {
+        display: block !important;
+    }
+
+    [data-layout="single"] .left-col {
+        display: flex !important;
+        flex-direction: row !important;
+        gap: 2vw !important;
+        flex: 1 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+
+    [data-layout="single"] .entries-group {
+        display: flex !important;
+        flex-direction: row !important;
+        gap: 1.5vw !important;
+    }
+
+    [data-layout="single"] .left-col .section:nth-of-type(2) .entries-group {
+        flex-direction: column !important;
+        gap: 1rem !important;
+    }
+
+    [data-layout="single"] .left-col .section {
+        margin-bottom: 1.5rem !important;
+    }
+}
+/* ===========================================
+   SVG ADAPTATION (Creation Performance)
+   =========================================== */
+
+:root {
+    --cp-bg: #E9E9E9;
+    --cp-stroke: #595959;
+    --cp-box: #ffffff;
+    --cp-orange: #F2821F;
+    --cp-green-light: #DCF8B7;
+    --cp-green-dark: #8DC63F;
+    --cp-yellow: #FFDF89;
+    --cp-blue: #D6E9FA;
+    --cp-purple: #CCCDFA;
+    --cp-red-light: #FFCDCD;
+    --cp-red-stroke: #E09A9A;
+    --cp-border-light: #E9E9E9;
+    --cp-border-med: #C6C6C6;
+    --cp-border-dark: #828282;
+    --cp-accent-green-1: #B8D48A;
+    --cp-accent-green-2: #69B27A;
+}
+
+[data-theme="editorial"] {
+    --cp-bg: #f0ebe1;
+    --cp-stroke: #2c2c2c;
+    --cp-box: #ffffff;
+    --cp-orange: #c43228;
+    --cp-green-light: #e2e8c0;
+    --cp-green-dark: #6e963b;
+    --cp-yellow: #e6c875;
+    --cp-blue: #c4d8ea;
+    --cp-purple: #c0c1e8;
+    --cp-red-light: #e8bcbc;
+    --cp-red-stroke: #b57a7a;
+    --cp-border-light: #dcd6cb;
+    --cp-border-med: #b5afa4;
+    --cp-border-dark: #666666;
+    --cp-accent-green-1: #a8c47a;
+    --cp-accent-green-2: #59a26a;
+}
+
+[data-theme="bold-signal"] {
+    --cp-bg: #1a1a1a;
+    --cp-stroke: #e0e0e0;
+    --cp-box: #161616;
+    --cp-orange: #FF4500;
+    --cp-green-light: #2a3b1a;
+    --cp-green-dark: #4d7a1f;
+    --cp-yellow: #5a4b1c;
+    --cp-blue: #1b3a5a;
+    --cp-purple: #3a2b5a;
+    --cp-red-light: #4a2020;
+    --cp-red-stroke: #8a3b3b;
+    --cp-border-light: #333333;
+    --cp-border-med: #555555;
+    --cp-border-dark: #888888;
+    --cp-accent-green-1: #3a4a2a;
+    --cp-accent-green-2: #2a6a3a;
+}
+
+[data-theme="terminal-green"] {
+    --cp-bg: #0d1117;
+    --cp-stroke: #c9d1d9;
+    --cp-box: #161b22;
+    --cp-orange: #39d353;
+    --cp-green-light: #0f3d1e;
+    --cp-green-dark: #2ea043;
+    --cp-yellow: #5a4b1c;
+    --cp-blue: #0d2b3a;
+    --cp-purple: #2b1b3a;
+    --cp-red-light: #3a1b1b;
+    --cp-red-stroke: #8a3b3b;
+    --cp-border-light: #30363d;
+    --cp-border-med: #484f58;
+    --cp-border-dark: #8b949e;
+    --cp-accent-green-1: #1f4d2e;
+    --cp-accent-green-2: #238636;
+}
+
+#svg-creation-performance svg {
+    background: transparent !important;
+}
+
+#svg-creation-performance svg path[fill="#E9E9E9" i] { fill: var(--cp-bg) !important; }
+#svg-creation-performance svg path[stroke="#595959" i] { stroke: var(--cp-stroke) !important; }
+#svg-creation-performance svg path[fill="#595959" i] { fill: var(--cp-stroke) !important; }
+#svg-creation-performance svg path[fill="#fff" i], 
+#svg-creation-performance svg path[fill="#FFFFFF" i] { fill: var(--cp-box) !important; }
+#svg-creation-performance svg path[fill="#F2821F" i] { fill: var(--cp-orange) !important; }
+#svg-creation-performance svg path[fill="#DCF8B7" i] { fill: var(--cp-green-light) !important; }
+#svg-creation-performance svg path[stroke="#8DC63F" i] { stroke: var(--cp-green-dark) !important; }
+#svg-creation-performance svg path[fill="#FFDF89" i] { fill: var(--cp-yellow) !important; }
+#svg-creation-performance svg path[fill="#D6E9FA" i] { fill: var(--cp-blue) !important; }
+#svg-creation-performance svg path[fill="#CCCDFA" i] { fill: var(--cp-purple) !important; }
+#svg-creation-performance svg path[fill="#FFCDCD" i] { fill: var(--cp-red-light) !important; }
+#svg-creation-performance svg path[stroke="#E09A9A" i] { stroke: var(--cp-red-stroke) !important; }
+#svg-creation-performance svg path[stroke="#E9E9E9" i] { stroke: var(--cp-border-light) !important; }
+#svg-creation-performance svg path[stroke="#C6C6C6" i] { stroke: var(--cp-border-med) !important; }
+#svg-creation-performance svg path[stroke="#828282" i] { stroke: var(--cp-border-dark) !important; }
+#svg-creation-performance svg path[fill="#B8D48A" i] { fill: var(--cp-accent-green-1) !important; }
+#svg-creation-performance svg path[fill="#69B27A" i] { fill: var(--cp-accent-green-2) !important; }
+#svg-creation-performance svg path[fill="#E9E9E9" i], .diagram-modal-body svg path[fill="#E9E9E9" i] { fill: var(--cp-bg) !important; }
+#svg-creation-performance svg path[stroke="#595959" i], .diagram-modal-body svg path[stroke="#595959" i] { stroke: var(--cp-stroke) !important; }
+#svg-creation-performance svg path[fill="#595959" i], .diagram-modal-body svg path[fill="#595959" i] { fill: var(--cp-stroke) !important; }
+#svg-creation-performance svg path[fill="#fff" i], .diagram-modal-body svg path[fill="#fff" i], 
+#svg-creation-performance svg path[fill="#FFFFFF" i], .diagram-modal-body svg path[fill="#FFFFFF" i] { fill: var(--cp-box) !important; }
+#svg-creation-performance svg path[fill="#F2821F" i], .diagram-modal-body svg path[fill="#F2821F" i] { fill: var(--cp-orange) !important; }
+#svg-creation-performance svg path[fill="#DCF8B7" i], .diagram-modal-body svg path[fill="#DCF8B7" i] { fill: var(--cp-green-light) !important; }
+#svg-creation-performance svg path[stroke="#8DC63F" i], .diagram-modal-body svg path[stroke="#8DC63F" i] { stroke: var(--cp-green-dark) !important; }
+#svg-creation-performance svg path[fill="#FFDF89" i], .diagram-modal-body svg path[fill="#FFDF89" i] { fill: var(--cp-yellow) !important; }
+#svg-creation-performance svg path[fill="#D6E9FA" i], .diagram-modal-body svg path[fill="#D6E9FA" i] { fill: var(--cp-blue) !important; }
+#svg-creation-performance svg path[fill="#CCCDFA" i], .diagram-modal-body svg path[fill="#CCCDFA" i] { fill: var(--cp-purple) !important; }
+#svg-creation-performance svg path[fill="#FFCDCD" i], .diagram-modal-body svg path[fill="#FFCDCD" i] { fill: var(--cp-red-light) !important; }
+#svg-creation-performance svg path[stroke="#E09A9A" i], .diagram-modal-body svg path[stroke="#E09A9A" i] { stroke: var(--cp-red-stroke) !important; }
+#svg-creation-performance svg path[stroke="#E9E9E9" i], .diagram-modal-body svg path[stroke="#E9E9E9" i] { stroke: var(--cp-border-light) !important; }
+#svg-creation-performance svg path[stroke="#C6C6C6" i], .diagram-modal-body svg path[stroke="#C6C6C6" i] { stroke: var(--cp-border-med) !important; }
+#svg-creation-performance svg path[stroke="#828282" i], .diagram-modal-body svg path[stroke="#828282" i] { stroke: var(--cp-border-dark) !important; }
+#svg-creation-performance svg path[fill="#B8D48A" i], .diagram-modal-body svg path[fill="#B8D48A" i] { fill: var(--cp-accent-green-1) !important; }
+#svg-creation-performance svg path[fill="#69B27A" i], .diagram-modal-body svg path[fill="#69B27A" i] { fill: var(--cp-accent-green-2) !important; }
+
+.diagram-modal-content {
+    background: var(--bg) !important;
+    transition: background-color 0.4s ease;
+}
+
+.diagram-modal-body svg {
+    background: transparent !important;
+}
+/* ===========================================
+   ENHANCED DIAGRAM MODAL (SPLIT VIEW)
+   =========================================== */
+.diagram-modal {
+    background: rgba(0, 0, 0, 0.7) !important;
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+}
+[data-theme="editorial"] .diagram-modal {
+    background: rgba(248, 245, 240, 0.8) !important;
+}
+
+.diagram-modal-content {
+    width: 95vw !important;
+    max-width: 1400px !important;
+    height: 85vh !important;
+    max-height: 900px !important;
+    background: var(--bg) !important;
+    border: var(--border-style) !important;
+    padding: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: hidden !important;
+}
+
+.diagram-modal-close {
+    top: 20px !important;
+    right: 20px !important;
+    z-index: 10;
+    background: var(--bg-alt) !important;
+    color: var(--text) !important;
+    border: var(--border-style) !important;
+}
+.diagram-modal-close:hover {
+    background: var(--accent) !important;
+    color: var(--bg) !important;
+}
+
+.diagram-modal-split {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    flex-direction: row;
+}
+
+.diagram-modal-left {
+    flex: 0 0 35%;
+    min-width: 320px;
+    padding: 4rem 3rem;
+    background: var(--bg-alt);
+    border-right: var(--border-style);
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.diagram-modal-left > * {
+    animation: slideIn 0.5s ease forwards;
+}
+
+@keyframes slideIn {
+    from { opacity: 0; transform: translateX(-20px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+.diagram-modal-left .project-card, .diagram-modal-left .entry {
+    border: none !important;
+    box-shadow: none !important;
+    background: transparent !important;
+    padding: 0 !important;
+    margin-bottom: 0 !important;
+}
+
+.diagram-modal-right {
+    flex: 1;
+    padding: 3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: auto;
+    background: var(--bg);
+}
+
+.diagram-modal-right svg {
+    width: 100%;
+    height: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    animation: fadeInScale 0.6s ease forwards;
+}
+
+@keyframes fadeInScale {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+@media (max-width: 900px) {
+    .diagram-modal-split {
+        flex-direction: column;
+    }
+    .diagram-modal-left {
+        flex: 0 0 auto;
+        border-right: none;
+        border-bottom: var(--border-style);
+        padding: 2rem;
+        justify-content: flex-start;
+    }
+    .diagram-modal-right {
+        padding: 1.5rem;
+    }
+}
+
+/* ===========================================
+   SVG ADAPTATION (TV Companion - Skeleton Mode)
+   =========================================== */
+:root {
+    --tvc-box1-bg: #161616;
+    --tvc-box1-border: #FF4500;
+    --tvc-box1-text: #e0e0e0;
+    
+    --tvc-box2-bg: #1a1a1a;
+    --tvc-box2-border: #ff6a33;
+    --tvc-box2-text: #FF4500;
+    
+    --tvc-box3-bg: #161616;
+    --tvc-box3-border: #FF4500;
+    --tvc-box3-text: #e0e0e0;
+    
+    --tvc-arrow: #333333;
+    --tvc-subtext: #888888;
+}
+
+[data-theme="terminal-green"] {
+    --tvc-box1-bg: #0d1117;
+    --tvc-box1-border: #30363d;
+    --tvc-box1-text: #c9d1d9;
+    
+    --tvc-box2-bg: #161b22;
+    --tvc-box2-border: #39d353;
+    --tvc-box2-text: #39d353;
+    
+    --tvc-box3-bg: #0d1117;
+    --tvc-box3-border: #30363d;
+    --tvc-box3-text: #c9d1d9;
+    
+    --tvc-arrow: #30363d;
+    --tvc-subtext: #8b949e;
+}
+
+[data-theme="editorial"] {
+    --tvc-box1-bg: #ffffff;
+    --tvc-box1-border: #dcd6cb;
+    --tvc-box1-text: #2c2c2c;
+    
+    --tvc-box2-bg: #f0ebe1;
+    --tvc-box2-border: #c43228;
+    --tvc-box2-text: #c43228;
+    
+    --tvc-box3-bg: #ffffff;
+    --tvc-box3-border: #dcd6cb;
+    --tvc-box3-text: #2c2c2c;
+    
+    --tvc-arrow: #dcd6cb;
+    --tvc-subtext: #666666;
+}
+
+.tv-companion-svg {
+    background: transparent;
+    font-family: var(--font-body);
+}
+
+.tv-companion-svg .title {
+    font-family: var(--font-display);
+    font-weight: bold;
+}
+
+.tv-companion-svg .desc {
+    font-size: 14px;
+}
+
+.tv-companion-svg .block-user-input rect {
+    fill: var(--tvc-box1-bg);
+    stroke: var(--tvc-box1-border);
+    stroke-width: 2;
+}
+.tv-companion-svg .block-user-input text {
+    fill: var(--tvc-box1-text);
+}
+
+.tv-companion-svg .block-agent-loop rect {
+    fill: var(--tvc-box2-bg);
+    stroke: var(--tvc-box2-border);
+    stroke-width: 2;
+}
+.tv-companion-svg .block-agent-loop .title {
+    fill: var(--tvc-box2-text);
+}
+.tv-companion-svg .block-agent-loop .desc {
+    fill: var(--tvc-subtext);
+}
+
+.tv-companion-svg .block-smart-tv rect {
+    fill: var(--tvc-box3-bg);
+    stroke: var(--tvc-box3-border);
+    stroke-width: 2;
+}
+.tv-companion-svg .block-smart-tv text.title {
+    fill: var(--tvc-box3-text);
+}
+.tv-companion-svg .block-smart-tv text.desc {
+    fill: var(--tvc-subtext);
+    font-size: 12px;
+}
+
+.tv-companion-svg .arrow-path {
+    stroke: var(--tvc-arrow);
+    stroke-width: 4;
+    fill: none;
+}
+.tv-companion-svg .arrow-head {
+    fill: var(--tvc-arrow);
+}
+
+[data-theme="terminal-green"] .tv-companion-svg .arrow-path {
+    stroke-dasharray: 6 4;
+}
+[data-theme="terminal-green"] .tv-companion-svg rect {
+    stroke-dasharray: 4 4;
+}
+
+/* ===========================================
+   SVG ADAPTATION (TTLite Album - Skeleton Mode)
+   =========================================== */
+:root {
+    --ttl-bg: #f4f6f9;
+    --ttl-header-bg-1: #1a1a2e;
+    --ttl-header-bg-2: #16213e;
+    --ttl-header-text: #ffffff;
+    --ttl-section-bg: #ffffff;
+    --ttl-section-title: #1a1a2e;
+    --ttl-card-ok-bg: #e8f5e9;
+    --ttl-card-ok-border: #81c784;
+    --ttl-card-ok-accent: #2e7d32;
+    --ttl-card-ok-highlight: #a5d6a7;
+    --ttl-card-ok-text: #1b5e20;
+    --ttl-card-no-bg: #ffebee;
+    --ttl-card-no-border: #e57373;
+    --ttl-card-no-accent: #c62828;
+    --ttl-card-no-highlight: #ef9a9a;
+    --ttl-card-no-text: #b71c1c;
+    --ttl-box-bg: #ffffff;
+    --ttl-box-text: #333333;
+    --ttl-desc: #555555;
+    --ttl-body-text: #444444;
+    --ttl-manager-bg: #e3f2fd;
+    --ttl-manager-border: #2196f3;
+    --ttl-manager-title: #0d47a1;
+    --ttl-manager-sub: #1565c0;
+    --ttl-manager-divider: #90caf9;
+    --ttl-input-bg: #f1f3f5;
+    --ttl-input-text: #555555;
+    --ttl-api-bg: #f8f9fc;
+    --ttl-api-border: #cccccc;
+    --ttl-api-text: #555555;
+    --ttl-arrow-gray: #778899;
+    --ttl-arrow-blue: #2196f3;
+    --ttl-arrow-orange: #ff9800;
+    --ttl-accent-orange: #f57c00;
+    --ttl-inner-bg: #fafafa;
+    --ttl-inner-border: #e0e0e0;
+    --ttl-item-bg: #e0e0e0;
+    --ttl-item-border: #bdbdbd;
+    --ttl-new-item-bg: #fff3e0;
+    --ttl-new-item-border: #ff9800;
+    --ttl-compat-bg: #ede7f6;
+    --ttl-compat-border: #90caf9;
+    --ttl-compat-text: #1565c0;
+    --ttl-shadow-color: rgba(0,0,0,0.08);
+}
+
+[data-theme="bold-signal"] {
+    --ttl-bg: #111111;
+    --ttl-header-bg-1: #1a1a1a;
+    --ttl-header-bg-2: #111111;
+    --ttl-header-text: #e0e0e0;
+    --ttl-section-bg: #161616;
+    --ttl-section-title: #e0e0e0;
+    --ttl-card-ok-bg: #1a2e1a;
+    --ttl-card-ok-border: #4d7a1f;
+    --ttl-card-ok-accent: #FF4500;
+    --ttl-card-ok-highlight: #2a3b1a;
+    --ttl-card-ok-text: #8dc63f;
+    --ttl-card-no-bg: #2e1a1a;
+    --ttl-card-no-border: #8a3b3b;
+    --ttl-card-no-accent: #FF4500;
+    --ttl-card-no-highlight: #4a2020;
+    --ttl-card-no-text: #e57373;
+    --ttl-box-bg: #1a1a1a;
+    --ttl-box-text: #e0e0e0;
+    --ttl-desc: #888888;
+    --ttl-body-text: #e0e0e0;
+    --ttl-manager-bg: #1b3a5a;
+    --ttl-manager-border: #FF4500;
+    --ttl-manager-title: #e0e0e0;
+    --ttl-manager-sub: #ff6a33;
+    --ttl-manager-divider: #333333;
+    --ttl-input-bg: #1a1a1a;
+    --ttl-input-text: #888888;
+    --ttl-api-bg: #161616;
+    --ttl-api-border: #333333;
+    --ttl-api-text: #888888;
+    --ttl-arrow-gray: #555555;
+    --ttl-arrow-blue: #FF4500;
+    --ttl-arrow-orange: #FF4500;
+    --ttl-accent-orange: #ff6a33;
+    --ttl-inner-bg: #161616;
+    --ttl-inner-border: #333333;
+    --ttl-item-bg: #1a1a1a;
+    --ttl-item-border: #333333;
+    --ttl-new-item-bg: #2a1a0a;
+    --ttl-new-item-border: #FF4500;
+    --ttl-compat-bg: #1a1a2e;
+    --ttl-compat-border: #333333;
+    --ttl-compat-text: #ff6a33;
+    --ttl-shadow-color: rgba(0,0,0,0);
+}
+
+[data-theme="terminal-green"] {
+    --ttl-bg: #0d1117;
+    --ttl-header-bg-1: #0d1117;
+    --ttl-header-bg-2: #161b22;
+    --ttl-header-text: #39d353;
+    --ttl-section-bg: #161b22;
+    --ttl-section-title: #c9d1d9;
+    --ttl-card-ok-bg: #0f3d1e;
+    --ttl-card-ok-border: #238636;
+    --ttl-card-ok-accent: #39d353;
+    --ttl-card-ok-highlight: #1f4d2e;
+    --ttl-card-ok-text: #39d353;
+    --ttl-card-no-bg: #3a1b1b;
+    --ttl-card-no-border: #8a3b3b;
+    --ttl-card-no-accent: #f85149;
+    --ttl-card-no-highlight: #3a1b1b;
+    --ttl-card-no-text: #f85149;
+    --ttl-box-bg: #0d1117;
+    --ttl-box-text: #c9d1d9;
+    --ttl-desc: #8b949e;
+    --ttl-body-text: #c9d1d9;
+    --ttl-manager-bg: #0d2b3a;
+    --ttl-manager-border: #39d353;
+    --ttl-manager-title: #c9d1d9;
+    --ttl-manager-sub: #39d353;
+    --ttl-manager-divider: #30363d;
+    --ttl-input-bg: #161b22;
+    --ttl-input-text: #8b949e;
+    --ttl-api-bg: #0d1117;
+    --ttl-api-border: #30363d;
+    --ttl-api-text: #8b949e;
+    --ttl-arrow-gray: #30363d;
+    --ttl-arrow-blue: #39d353;
+    --ttl-arrow-orange: #39d353;
+    --ttl-accent-orange: #39d353;
+    --ttl-inner-bg: #0d1117;
+    --ttl-inner-border: #30363d;
+    --ttl-item-bg: #161b22;
+    --ttl-item-border: #30363d;
+    --ttl-new-item-bg: #0f3d1e;
+    --ttl-new-item-border: #39d353;
+    --ttl-compat-bg: #161b22;
+    --ttl-compat-border: #30363d;
+    --ttl-compat-text: #39d353;
+    --ttl-shadow-color: rgba(0,0,0,0);
+}
+
+[data-theme="editorial"] {
+    --ttl-bg: #f0ebe1;
+    --ttl-header-bg-1: #2c2c2c;
+    --ttl-header-bg-2: #3c3c3c;
+    --ttl-header-text: #f8f5f0;
+    --ttl-section-bg: #ffffff;
+    --ttl-section-title: #2c2c2c;
+    --ttl-card-ok-bg: #e2e8c0;
+    --ttl-card-ok-border: #6e963b;
+    --ttl-card-ok-accent: #59a26a;
+    --ttl-card-ok-highlight: #a8c47a;
+    --ttl-card-ok-text: #3a5a1a;
+    --ttl-card-no-bg: #e8bcbc;
+    --ttl-card-no-border: #b57a7a;
+    --ttl-card-no-accent: #c43228;
+    --ttl-card-no-highlight: #d4a0a0;
+    --ttl-card-no-text: #9c261e;
+    --ttl-box-bg: #ffffff;
+    --ttl-box-text: #2c2c2c;
+    --ttl-desc: #666666;
+    --ttl-body-text: #2c2c2c;
+    --ttl-manager-bg: #c4d8ea;
+    --ttl-manager-border: #4a7a9a;
+    --ttl-manager-title: #2c2c2c;
+    --ttl-manager-sub: #4a7a9a;
+    --ttl-manager-divider: #b5afa4;
+    --ttl-input-bg: #f0ebe1;
+    --ttl-input-text: #666666;
+    --ttl-api-bg: #f0ebe1;
+    --ttl-api-border: #b5afa4;
+    --ttl-api-text: #666666;
+    --ttl-arrow-gray: #b5afa4;
+    --ttl-arrow-blue: #4a7a9a;
+    --ttl-arrow-orange: #c43228;
+    --ttl-accent-orange: #9c261e;
+    --ttl-inner-bg: #f8f5f0;
+    --ttl-inner-border: #dcd6cb;
+    --ttl-item-bg: #f0ebe1;
+    --ttl-item-border: #dcd6cb;
+    --ttl-new-item-bg: #f5e6d0;
+    --ttl-new-item-border: #c43228;
+    --ttl-compat-bg: #c0c1e8;
+    --ttl-compat-border: #b5afa4;
+    --ttl-compat-text: #4a7a9a;
+    --ttl-shadow-color: rgba(0,0,0,0.03);
+}
+
+.ttl-album-svg {
+    background: var(--ttl-bg);
+    border-radius: 8px;
+    min-width: 600px;
+    font-family: var(--font-body, 'PingFang SC','Microsoft YaHei','Helvetica Neue',Arial,sans-serif);
+}
+
+.ttl-album-svg .ttl-section-title,
+.ttl-album-svg .ttl-header-text,
+.ttl-album-svg .ttl-card-ok-title,
+.ttl-album-svg .ttl-card-no-title,
+.ttl-album-svg .ttl-manager-title {
+    font-family: var(--font-display, 'PingFang SC','Microsoft YaHei','Helvetica Neue',Arial,sans-serif);
+}
+
+[data-theme="terminal-green"] .ttl-album-svg .ttl-card-ok-bg { stroke-dasharray: 4 4; }
+[data-theme="terminal-green"] .ttl-album-svg .ttl-card-no-bg { stroke-dasharray: 4 4; }
+[data-theme="terminal-green"] .ttl-album-svg .ttl-manager-bg { stroke-dasharray: 4 4; }
+[data-theme="terminal-green"] .ttl-album-svg .ttl-card-ok-arrow { stroke-dasharray: 6 4; }
+[data-theme="terminal-green"] .ttl-album-svg .ttl-card-no-arrow { stroke-dasharray: 6 4; }
+[data-theme="terminal-green"] .ttl-album-svg .ttl-arrow-gray { stroke-dasharray: 6 4; }
+[data-theme="terminal-green"] .ttl-album-svg .ttl-arrow-blue { stroke-dasharray: 6 4; }
+[data-theme="terminal-green"] .ttl-album-svg .ttl-arrow-orange { stroke-dasharray: 6 4; }
+
+/* ===========================================
+   WATERMARK SYSTEM
+   =========================================== */
+.watermark-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 99;
+    overflow: hidden;
+}
+
+.watermark-text {
+    position: absolute;
+    font-family: var(--font-body);
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    opacity: 0.06;
+    white-space: nowrap;
+    transform: rotate(-30deg);
+    user-select: none;
+    -webkit-user-select: none;
+    letter-spacing: 0.15em;
+}
+
+[data-theme="editorial"] .watermark-text {
+    opacity: 0.04;
+}
+
+.watermark-pdf-tag {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+    font-size: 0;
+    line-height: 0;
+    color: transparent;
+    pointer-events: none;
+    user-select: none;
+    -webkit-user-select: none;
+    z-index: 98;
+}
+
+@media print {
+    .watermark-overlay {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+    }
+    .watermark-text {
+        opacity: 0.03 !important;
+    }
+    .watermark-pdf-tag {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 0;
+        height: 0;
+        overflow: hidden;
+        font-size: 0;
+        line-height: 0;
+        color: #ffffff;
+    }
+}
+
+/* ===========================================
+   SVG VARIABLES - AgentForge (--af-*)
+   =========================================== */
+:root {
+    --af-bg: #111111;
+    --af-box-bg: #161616;
+    --af-box-border: #FF4500;
+    --af-box-text: #e0e0e0;
+    --af-accent: #FF4500;
+    --af-accent-hover: #ff6a33;
+    --af-subtext: #888888;
+    --af-arrow: #333333;
+    --af-frame-bg: #1a1a1a;
+    --af-frame-border: #555555;
+    --af-green-bg: #1a2e1a;
+    --af-green-border: #4d7a1f;
+    --af-green-text: #8dc63f;
+    --af-blue-bg: #1b3a5a;
+    --af-blue-border: #2196f3;
+    --af-blue-text: #64b5f6;
+    --af-purple-bg: #2a1b3a;
+    --af-purple-border: #9c27b0;
+    --af-purple-text: #ce93d8;
+    --af-yellow-bg: #3a3a1a;
+    --af-yellow-border: #f9a825;
+    --af-yellow-text: #fff176;
+}
+
+[data-theme="bold-signal"] {
+    --af-bg: #111111;
+    --af-box-bg: #161616;
+    --af-box-border: #FF4500;
+    --af-box-text: #e0e0e0;
+    --af-accent: #FF4500;
+    --af-accent-hover: #ff6a33;
+    --af-subtext: #888888;
+    --af-arrow: #333333;
+    --af-frame-bg: #1a1a1a;
+    --af-frame-border: #555555;
+    --af-green-bg: #1a2e1a;
+    --af-green-border: #4d7a1f;
+    --af-green-text: #8dc63f;
+    --af-blue-bg: #1b3a5a;
+    --af-blue-border: #2196f3;
+    --af-blue-text: #64b5f6;
+    --af-purple-bg: #2a1b3a;
+    --af-purple-border: #9c27b0;
+    --af-purple-text: #ce93d8;
+    --af-yellow-bg: #3a3a1a;
+    --af-yellow-border: #f9a825;
+    --af-yellow-text: #fff176;
+}
+
+[data-theme="terminal-green"] {
+    --af-bg: #0d1117;
+    --af-box-bg: #161b22;
+    --af-box-border: #30363d;
+    --af-accent: #39d353;
+    --af-accent-hover: #4ade80;
+    --af-subtext: #8b949e;
+    --af-arrow: #30363d;
+    --af-frame-bg: #0d1117;
+    --af-frame-border: #484f58;
+    --af-green-bg: #0f3d1e;
+    --af-green-border: #238636;
+    --af-green-text: #39d353;
+    --af-blue-bg: #0d2b3a;
+    --af-blue-border: #1f6feb;
+    --af-blue-text: #58a6ff;
+    --af-purple-bg: #1b0d2a;
+    --af-purple-border: #8957e5;
+    --af-purple-text: #d2a8ff;
+    --af-yellow-bg: #2a2507;
+    --af-yellow-border: #e3b341;
+    --af-yellow-text: #e3b341;
+}
+
+[data-theme="editorial"] {
+    --af-bg: #f0ebe1;
+    --af-box-bg: #ffffff;
+    --af-box-border: #dcd6cb;
+    --af-accent: #c43228;
+    --af-accent-hover: #9c261e;
+    --af-subtext: #666666;
+    --af-arrow: #b5afa4;
+    --af-frame-bg: #f8f5f0;
+    --af-frame-border: #b5afa4;
+    --af-green-bg: #e2e8c0;
+    --af-green-border: #6e963b;
+    --af-green-text: #3a5a1a;
+    --af-blue-bg: #c4d8ea;
+    --af-blue-border: #4a7a9a;
+    --af-blue-text: #1a5a8a;
+    --af-purple-bg: #e0d8f0;
+    --af-purple-border: #7a5a9a;
+    --af-purple-text: #5a3a7a;
+    --af-yellow-bg: #f5e6d0;
+    --af-yellow-border: #c49020;
+    --af-yellow-text: #8a6010;
+}
+
+[data-theme="terminal-green"] .agentforge-svg rect { stroke-dasharray: 4 4; }
+[data-theme="terminal-green"] .agentforge-svg .arrow-path { stroke-dasharray: 6 4; }
+
+/* ===========================================
+   SVG VARIABLES - MemoryOS (--mos-*)
+   =========================================== */
+:root {
+    --mos-bg: #111111;
+    --mos-box-bg: #161616;
+    --mos-box-border: #FF4500;
+    --mos-box-text: #e0e0e0;
+    --mos-accent: #FF4500;
+    --mos-subtext: #888888;
+    --mos-arrow: #333333;
+    --mos-frame-bg: #1a1a1a;
+    --mos-frame-border: #555555;
+    --mos-work-bg: #1b3a5a;
+    --mos-work-border: #2196f3;
+    --mos-work-text: #64b5f6;
+    --mos-episodic-bg: #2a1b3a;
+    --mos-episodic-border: #9c27b0;
+    --mos-episodic-text: #ce93d8;
+    --mos-semantic-bg: #1a2e1a;
+    --mos-semantic-border: #4caf50;
+    --mos-semantic-text: #81c784;
+    --mos-router-bg: #3a3a1a;
+    --mos-router-border: #f9a825;
+    --mos-router-text: #fff176;
+    --mos-forget-bg: #2e1a1a;
+    --mos-forget-border: #e57373;
+    --mos-forget-text: #ef9a9a;
+}
+
+[data-theme="bold-signal"] {
+    --mos-bg: #111111;
+    --mos-box-bg: #161616;
+    --mos-box-border: #FF4500;
+    --mos-box-text: #e0e0e0;
+    --mos-accent: #FF4500;
+    --mos-subtext: #888888;
+    --mos-arrow: #333333;
+    --mos-frame-bg: #1a1a1a;
+    --mos-frame-border: #555555;
+    --mos-work-bg: #1b3a5a;
+    --mos-work-border: #2196f3;
+    --mos-work-text: #64b5f6;
+    --mos-episodic-bg: #2a1b3a;
+    --mos-episodic-border: #9c27b0;
+    --mos-episodic-text: #ce93d8;
+    --mos-semantic-bg: #1a2e1a;
+    --mos-semantic-border: #4caf50;
+    --mos-semantic-text: #81c784;
+    --mos-router-bg: #3a3a1a;
+    --mos-router-border: #f9a825;
+    --mos-router-text: #fff176;
+    --mos-forget-bg: #2e1a1a;
+    --mos-forget-border: #e57373;
+    --mos-forget-text: #ef9a9a;
+}
+
+[data-theme="terminal-green"] {
+    --mos-bg: #0d1117;
+    --mos-box-bg: #161b22;
+    --mos-box-border: #30363d;
+    --mos-accent: #39d353;
+    --mos-subtext: #8b949e;
+    --mos-arrow: #30363d;
+    --mos-frame-bg: #0d1117;
+    --mos-frame-border: #484f58;
+    --mos-work-bg: #0d2b3a;
+    --mos-work-border: #1f6feb;
+    --mos-work-text: #58a6ff;
+    --mos-episodic-bg: #1b0d2a;
+    --mos-episodic-border: #8957e5;
+    --mos-episodic-text: #d2a8ff;
+    --mos-semantic-bg: #0f3d1e;
+    --mos-semantic-border: #238636;
+    --mos-semantic-text: #39d353;
+    --mos-router-bg: #2a2507;
+    --mos-router-border: #e3b341;
+    --mos-router-text: #e3b341;
+    --mos-forget-bg: #3a1b1b;
+    --mos-forget-border: #f85149;
+    --mos-forget-text: #f85149;
+}
+
+[data-theme="editorial"] {
+    --mos-bg: #f0ebe1;
+    --mos-box-bg: #ffffff;
+    --mos-box-border: #dcd6cb;
+    --mos-accent: #c43228;
+    --mos-subtext: #666666;
+    --mos-arrow: #b5afa4;
+    --mos-frame-bg: #f8f5f0;
+    --mos-frame-border: #b5afa4;
+    --mos-work-bg: #c4d8ea;
+    --mos-work-border: #4a7a9a;
+    --mos-work-text: #1a5a8a;
+    --mos-episodic-bg: #e0d8f0;
+    --mos-episodic-border: #7a5a9a;
+    --mos-episodic-text: #5a3a7a;
+    --mos-semantic-bg: #e2e8c0;
+    --mos-semantic-border: #6e963b;
+    --mos-semantic-text: #3a5a1a;
+    --mos-router-bg: #f5e6d0;
+    --mos-router-border: #c49020;
+    --mos-router-text: #8a6010;
+    --mos-forget-bg: #e8bcbc;
+    --mos-forget-border: #b57a7a;
+    --mos-forget-text: #9c261e;
+}
+
+[data-theme="terminal-green"] .memoryos-svg rect { stroke-dasharray: 4 4; }
+[data-theme="terminal-green"] .memoryos-svg .arrow-path { stroke-dasharray: 6 4; }
+
+/* ===========================================
+   SVG VARIABLES - CodePilot (--cdp-*)
+   =========================================== */
+:root {
+    --cdp-bg: #111111;
+    --cdp-box-bg: #161616;
+    --cdp-box-border: #FF4500;
+    --cdp-box-text: #e0e0e0;
+    --cdp-accent: #FF4500;
+    --cdp-subtext: #888888;
+    --cdp-arrow: #333333;
+    --cdp-frame-bg: #1a1a1a;
+    --cdp-frame-border: #555555;
+    --cdp-react-bg: #1b3a5a;
+    --cdp-react-border: #2196f3;
+    --cdp-react-text: #64b5f6;
+    --cdp-plan-bg: #2a1b3a;
+    --cdp-plan-border: #9c27b0;
+    --cdp-plan-text: #ce93d8;
+    --cdp-reflect-bg: #1a2e1a;
+    --cdp-reflect-border: #4caf50;
+    --cdp-reflect-text: #81c784;
+    --cdp-tool-bg: #3a3a1a;
+    --cdp-tool-border: #f9a825;
+    --cdp-tool-text: #fff176;
+    --cdp-scene-bg: #2e1a1a;
+    --cdp-scene-border: #e57373;
+    --cdp-scene-text: #ef9a9a;
+}
+
+[data-theme="bold-signal"] {
+    --cdp-bg: #111111;
+    --cdp-box-bg: #161616;
+    --cdp-box-border: #FF4500;
+    --cdp-box-text: #e0e0e0;
+    --cdp-accent: #FF4500;
+    --cdp-subtext: #888888;
+    --cdp-arrow: #333333;
+    --cdp-frame-bg: #1a1a1a;
+    --cdp-frame-border: #555555;
+    --cdp-react-bg: #1b3a5a;
+    --cdp-react-border: #2196f3;
+    --cdp-react-text: #64b5f6;
+    --cdp-plan-bg: #2a1b3a;
+    --cdp-plan-border: #9c27b0;
+    --cdp-plan-text: #ce93d8;
+    --cdp-reflect-bg: #1a2e1a;
+    --cdp-reflect-border: #4caf50;
+    --cdp-reflect-text: #81c784;
+    --cdp-tool-bg: #3a3a1a;
+    --cdp-tool-border: #f9a825;
+    --cdp-tool-text: #fff176;
+    --cdp-scene-bg: #2e1a1a;
+    --cdp-scene-border: #e57373;
+    --cdp-scene-text: #ef9a9a;
+}
+
+[data-theme="terminal-green"] {
+    --cdp-bg: #0d1117;
+    --cdp-box-bg: #161b22;
+    --cdp-box-border: #30363d;
+    --cdp-accent: #39d353;
+    --cdp-subtext: #8b949e;
+    --cdp-arrow: #30363d;
+    --cdp-frame-bg: #0d1117;
+    --cdp-frame-border: #484f58;
+    --cdp-react-bg: #0d2b3a;
+    --cdp-react-border: #1f6feb;
+    --cdp-react-text: #58a6ff;
+    --cdp-plan-bg: #1b0d2a;
+    --cdp-plan-border: #8957e5;
+    --cdp-plan-text: #d2a8ff;
+    --cdp-reflect-bg: #0f3d1e;
+    --cdp-reflect-border: #238636;
+    --cdp-reflect-text: #39d353;
+    --cdp-tool-bg: #2a2507;
+    --cdp-tool-border: #e3b341;
+    --cdp-tool-text: #e3b341;
+    --cdp-scene-bg: #3a1b1b;
+    --cdp-scene-border: #f85149;
+    --cdp-scene-text: #f85149;
+}
+
+[data-theme="editorial"] {
+    --cdp-bg: #f0ebe1;
+    --cdp-box-bg: #ffffff;
+    --cdp-box-border: #dcd6cb;
+    --cdp-accent: #c43228;
+    --cdp-subtext: #666666;
+    --cdp-arrow: #b5afa4;
+    --cdp-frame-bg: #f8f5f0;
+    --cdp-frame-border: #b5afa4;
+    --cdp-react-bg: #c4d8ea;
+    --cdp-react-border: #4a7a9a;
+    --cdp-react-text: #1a5a8a;
+    --cdp-plan-bg: #e0d8f0;
+    --cdp-plan-border: #7a5a9a;
+    --cdp-plan-text: #5a3a7a;
+    --cdp-reflect-bg: #e2e8c0;
+    --cdp-reflect-border: #6e963b;
+    --cdp-reflect-text: #3a5a1a;
+    --cdp-tool-bg: #f5e6d0;
+    --cdp-tool-border: #c49020;
+    --cdp-tool-text: #8a6010;
+    --cdp-scene-bg: #e8bcbc;
+    --cdp-scene-border: #b57a7a;
+    --cdp-scene-text: #9c261e;
+}
+
+[data-theme="terminal-green"] .codepilot-svg rect { stroke-dasharray: 4 4; }
+[data-theme="terminal-green"] .codepilot-svg .arrow-path { stroke-dasharray: 6 4; }
+    </style>
+</head>
+<body>
+    <div class="watermark-overlay"></div>
+    <div class="theme-switcher">
+        <button class="theme-btn active" data-target="bold-signal">BOLD</button>
+        <button class="theme-btn" data-target="terminal-green">TERM</button>
+        <button class="theme-btn" data-target="editorial">EDIT</button>
+        <span class="switcher-divider"></span>
+        <button class="print-btn" onclick="window.print()">&#9113;</button>
+        <span class="switcher-divider"></span>
+        <button class="layout-btn active" data-layout="double" title="Double Column">&#9183;</button>
+        <button class="layout-btn" data-layout="single" title="Single Column">&#9776;</button>
+    </div>
+    <main class="page-container">
+        <header class="header reveal">
+            <div>
+                <h1 class="name">Zhou XX</h1>
+                <p class="title">AI Agent Architect<span class="cursor">_</span></p>
+            </div>
+            <div class="contact-info">
+                <p>[your email] / [your phone]</p>
+                <p>Shanghai &middot; 5 years &middot; P7</p>
+                <p>Performance: 3.75 / 3.5+ &middot; IELTS 7</p>
+            </div>
+        </header>
+
+        <div class="content-grid">
+            <div class="left-col">
+                <section class="section reveal">
+                    <h2 class="section-title">Working Experience</h2>
+                    <div class="entries-group">
+                        <div class="entry">
+                            <p class="entry-meta">20xx.xx - Present</p>
+                            <h3 class="entry-title">Senior AI Agent Architect</h3>
+                            <p class="entry-role">XX Corp &middot; XX Dept</p>
+                            <p class="entry-desc">Agent platform architecture evolution &amp; R&amp;D agent direction. Led CodePilot architecture &amp; delivery. Driving Agent technology across the full SDLC.</p>
+                        </div>
+                        <div class="entry">
+                            <p class="entry-meta">20xx.xx - 20xx.xx</p>
+                            <h3 class="entry-title">AI Agent Architect</h3>
+                            <p class="entry-role">XX Corp &middot; XX Dept</p>
+                            <p class="entry-desc">Enterprise Agent infrastructure &amp; multi-agent orchestration. Delivered AgentForge &amp; MemoryOS from scratch. 6 business lines transformed.</p>
+                        </div>
+                        <div class="entry">
+                            <p class="entry-meta">20xx.xx - 20xx.xx</p>
+                            <h3 class="entry-title">AI Application Engineer</h3>
+                            <p class="entry-role">XX Corp &middot; XX Dept</p>
+                            <p class="entry-desc">AI capabilities for creative scenarios. LLM integration &amp; prompt engineering for TT, TT Lite.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="section reveal">
+                    <h2 class="section-title">Education</h2>
+                    <div class="entries-group">
+                        <div class="entry">
+                            <p class="entry-meta">20xx.xx - 20xx.xx</p>
+                            <h3 class="entry-title">XX University</h3>
+                            <p class="entry-role">Ph.D.</p>
+                        </div>
+                        <div class="entry">
+                            <p class="entry-meta">20xx.xx - 20xx.xx</p>
+                            <h3 class="entry-title">XX University</h3>
+                            <p class="entry-role">Master</p>
+                        </div>
+                        <div class="entry">
+                            <p class="entry-meta">20xx.xx - 20xx.xx</p>
+                            <h3 class="entry-title">XX University</h3>
+                            <p class="entry-role">Bachelor</p>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <div class="right-col">
+                <section class="section reveal">
+                    <h2 class="section-title">Project Experience</h2>
+
+                    <div class="project-card reveal">
+                        <div class="project-header">
+                            <span class="project-number">01</span>
+                            <div>
+                                <div class="project-title-group">
+                                    <h3>AgentForge</h3>
+                                    <span class="project-tag">AI Agent / Architecture</span>
+                                    <button class="diagram-trigger" data-modal="modal-agentforge">&#9656; Architecture</button>
+                                </div>
+                                <ul class="bullet-list">
+                                    <li>DAG-based task orchestration engine with dependency declaration, parallel execution &amp; failure rollback</li>
+                                    <li>Unified Tool Registry: 200+ APIs wrapped, cross-BL reuse <span class="highlight">12% &rarr; 78%</span></li>
+                                    <li>Supervisor-Agent scheduling: token consumption <span class="highlight">-43%</span>, latency <span class="highlight">-35%</span></li>
+                                    <li>6 business lines, 500K+ daily orchestrations, human intervention <span class="highlight">32% &rarr; 7%</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-card reveal">
+                        <div class="project-header">
+                            <span class="project-number">02</span>
+                            <div>
+                                <div class="project-title-group">
+                                    <h3>MemoryOS</h3>
+                                    <span class="project-tag">AI Agent / Infrastructure</span>
+                                    <button class="diagram-trigger" data-modal="modal-memoryos">&#9656; Architecture</button>
+                                </div>
+                                <ul class="bullet-list">
+                                    <li>Three-layer memory: Working (sliding window) + Episodic (vector) + Semantic (knowledge graph)</li>
+                                    <li>Memory Router: intent-based routing, hit rate <span class="highlight">61% &rarr; 92%</span></li>
+                                    <li>Auto tiered storage &amp; forgetting mechanism for lifecycle management</li>
+                                    <li>120+ agent instances, 20M+ structured memory entries</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-card reveal">
+                        <div class="project-header">
+                            <span class="project-number">03</span>
+                            <div>
+                                <div class="project-title-group">
+                                    <h3>CodePilot</h3>
+                                    <span class="project-tag">AI Agent / Application</span>
+                                    <button class="diagram-trigger" data-modal="modal-codepilot">&#9656; Architecture</button>
+                                </div>
+                                <ul class="bullet-list">
+                                    <li>ReAct + Plan-and-Execute hybrid reasoning with Self-Reflection self-correction</li>
+                                    <li>15 R&amp;D tools as MCP Tools: repo indexing, CI/CD, monitoring, code review...</li>
+                                    <li>Code generation adoption <span class="highlight">41%</span>, CR coverage <span class="highlight">68%</span></li>
+                                    <li>Fault localization: <span class="highlight">45min &rarr; 8min</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <div class="diagram-modal" id="modal-agentforge">
+            <div class="diagram-modal-content">
+                <div class="diagram-modal-close">&#10005;</div>
+                <div class="diagram-modal-split">
+                    <div class="diagram-modal-left">
+                        <h2 style="color: var(--text); margin-bottom: 1rem;">AgentForge</h2>
+                        <p style="color: var(--text-muted); font-size: 0.9rem;">Multi-Agent Orchestration Platform &mdash; DAG-based task orchestration with Supervisor-Agent hierarchical scheduling and unified Tool Registry protocol.</p>
+                    </div>
+                    <div class="diagram-modal-right">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 680" width="100%" class="agentforge-svg">
+<style>
+.agentforge-svg {
+    background: transparent;
+    font-family: var(--font-body, 'Space Grotesk', sans-serif);
+}
+.agentforge-svg .title { font-family: var(--font-display, 'Archivo Black', sans-serif); font-weight: bold; }
+.agentforge-svg .desc { font-size: 12px; }
+.agentforge-svg .label { font-size: 11px; }
+.agentforge-svg .node-box rect { fill: var(--af-box-bg); stroke: var(--af-box-border); stroke-width: 2; rx: 8; }
+.agentforge-svg .node-box text { fill: var(--af-box-text); }
+.agentforge-svg .frame-box rect { fill: var(--af-frame-bg); stroke: var(--af-frame-border); stroke-width: 1.5; stroke-dasharray: 8 4; rx: 12; }
+.agentforge-svg .frame-box text { fill: var(--af-subtext); font-size: 13px; }
+.agentforge-svg .accent-box rect { fill: var(--af-accent); stroke: none; rx: 8; }
+.agentforge-svg .accent-box text { fill: var(--af-bg); font-weight: bold; }
+.agentforge-svg .green-box rect { fill: var(--af-green-bg); stroke: var(--af-green-border); stroke-width: 1.5; rx: 6; }
+.agentforge-svg .green-box text { fill: var(--af-green-text); }
+.agentforge-svg .blue-box rect { fill: var(--af-blue-bg); stroke: var(--af-blue-border); stroke-width: 1.5; rx: 6; }
+.agentforge-svg .blue-box text { fill: var(--af-blue-text); }
+.agentforge-svg .purple-box rect { fill: var(--af-purple-bg); stroke: var(--af-purple-border); stroke-width: 1.5; rx: 6; }
+.agentforge-svg .purple-box text { fill: var(--af-purple-text); }
+.agentforge-svg .yellow-box rect { fill: var(--af-yellow-bg); stroke: var(--af-yellow-border); stroke-width: 1.5; rx: 6; }
+.agentforge-svg .yellow-box text { fill: var(--af-yellow-text); }
+.agentforge-svg .arrow-path { stroke: var(--af-arrow); stroke-width: 2; fill: none; marker-end: url(#af-arrowhead); }
+.agentforge-svg .arrow-accent { stroke: var(--af-accent); stroke-width: 2.5; fill: none; marker-end: url(#af-arrowhead-accent); }
+.agentforge-svg .stat-text { fill: var(--af-accent); font-weight: bold; font-size: 13px; }
+.agentforge-svg .sub-text { fill: var(--af-subtext); font-size: 11px; }
+</style>
+<defs>
+    <marker id="af-arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+        <polygon points="0 0, 10 3.5, 0 7" fill="var(--af-arrow)" />
+    </marker>
+    <marker id="af-arrowhead-accent" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+        <polygon points="0 0, 10 3.5, 0 7" fill="var(--af-accent)" />
+    </marker>
+    <filter id="af-glow">
+        <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+        <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+</defs>
+
+<text x="20" y="24" class="sub-text" style="font-size:10px; opacity:0.5">agentforge.arch.v1</text>
+
+<g class="frame-box">
+    <rect x="30" y="40" width="900" height="130" />
+    <text x="50" y="65" class="title" style="font-size:14px">&#x1F9E0; SUPERVISOR-AGENT LAYER</text>
+</g>
+
+<g class="accent-box" transform="translate(350, 80)">
+    <rect width="260" height="60" filter="url(#af-glow)" />
+    <text x="130" y="28" text-anchor="middle" class="title" style="font-size:15px">Supervisor Agent</text>
+    <text x="130" y="46" text-anchor="middle" class="desc" style="fill:var(--af-bg); opacity:0.8">Dynamic Prompt Assembly + Context Compression</text>
+</g>
+
+<g class="frame-box">
+    <rect x="30" y="200" width="440" height="240" />
+    <text x="50" y="225" class="title" style="font-size:14px">&#x2699;&#xFE0F; DAG ORCHESTRATION ENGINE</text>
+</g>
+
+<g class="node-box" transform="translate(60, 250)">
+    <rect width="180" height="50" />
+    <text x="90" y="22" text-anchor="middle" class="title" style="font-size:13px">&#x1F4CB; Dependency Declaration</text>
+    <text x="90" y="40" text-anchor="middle" class="desc">Inter-agent DAG edges</text>
+</g>
+<g class="node-box" transform="translate(270, 250)">
+    <rect width="180" height="50" />
+    <text x="90" y="22" text-anchor="middle" class="title" style="font-size:13px">&#x26A1; Parallel Execution</text>
+    <text x="90" y="40" text-anchor="middle" class="desc">Concurrent branch dispatch</text>
+</g>
+<g class="node-box" transform="translate(60, 330)">
+    <rect width="180" height="50" />
+    <text x="90" y="22" text-anchor="middle" class="title" style="font-size:13px">&#x1F504; Failure Rollback</text>
+    <text x="90" y="40" text-anchor="middle" class="desc">Checkpoint + compensation</text>
+</g>
+<g class="node-box" transform="translate(270, 330)">
+    <rect width="180" height="50" />
+    <text x="90" y="22" text-anchor="middle" class="title" style="font-size:13px">&#x1F4CA; Task Scheduler</text>
+    <text x="90" y="40" text-anchor="middle" class="desc">Priority queue + retry</text>
+</g>
+
+<g class="frame-box">
+    <rect x="500" y="200" width="430" height="240" />
+    <text x="520" y="225" class="title" style="font-size:14px">&#x1F527; TOOL REGISTRY</text>
+</g>
+
+<g class="green-box" transform="translate(530, 250)">
+    <rect width="170" height="45" />
+    <text x="85" y="20" text-anchor="middle" class="title" style="font-size:12px">200+ Internal APIs</text>
+    <text x="85" y="36" text-anchor="middle" class="desc">Standardized wrappers</text>
+</g>
+<g class="blue-box" transform="translate(720, 250)">
+    <rect width="180" height="45" />
+    <text x="90" y="20" text-anchor="middle" class="title" style="font-size:12px">Unified Protocol</text>
+    <text x="90" y="36" text-anchor="middle" class="desc">Schema + auth + rate limit</text>
+</g>
+<g class="purple-box" transform="translate(530, 320)">
+    <rect width="170" height="45" />
+    <text x="85" y="20" text-anchor="middle" class="title" style="font-size:12px">Tool Discovery</text>
+    <text x="85" y="36" text-anchor="middle" class="desc">Semantic search + ranking</text>
+</g>
+<g class="yellow-box" transform="translate(720, 320)">
+    <rect width="180" height="45" />
+    <text x="90" y="20" text-anchor="middle" class="title" style="font-size:12px">Reuse: 12% &#x2192; 78%</text>
+    <text x="90" y="36" text-anchor="middle" class="desc">Cross-BL tool sharing</text>
+</g>
+
+<g class="frame-box">
+    <rect x="30" y="470" width="900" height="180" />
+    <text x="50" y="495" class="title" style="font-size:14px">&#x1F3E2; BUSINESS LINES (6 verticals, 500K+ daily)</text>
+</g>
+
+<g class="green-box" transform="translate(60, 520)">
+    <rect width="130" height="55" />
+    <text x="65" y="25" text-anchor="middle" style="font-size:20px">&#x1F3A7;</text>
+    <text x="65" y="45" text-anchor="middle" class="desc">Customer Service</text>
+</g>
+<g class="blue-box" transform="translate(210, 520)">
+    <rect width="130" height="55" />
+    <text x="65" y="25" text-anchor="middle" style="font-size:20px">&#x1F6E1;&#xFE0F;</text>
+    <text x="65" y="45" text-anchor="middle" class="desc">Risk Control</text>
+</g>
+<g class="purple-box" transform="translate(360, 520)">
+    <rect width="130" height="55" />
+    <text x="65" y="25" text-anchor="middle" style="font-size:20px">&#x1F4CA;</text>
+    <text x="65" y="45" text-anchor="middle" class="desc">Data Analysis</text>
+</g>
+<g class="yellow-box" transform="translate(510, 520)">
+    <rect width="130" height="55" />
+    <text x="65" y="25" text-anchor="middle" style="font-size:20px">&#x1F6D2;</text>
+    <text x="65" y="45" text-anchor="middle" class="desc">E-Commerce</text>
+</g>
+<g class="node-box" transform="translate(660, 520)">
+    <rect width="130" height="55" />
+    <text x="65" y="25" text-anchor="middle" style="font-size:20px">&#x1F4DD;</text>
+    <text x="65" y="45" text-anchor="middle" class="desc">Content</text>
+</g>
+<g class="node-box" transform="translate(810, 520)">
+    <rect width="100" height="55" />
+    <text x="50" y="25" text-anchor="middle" style="font-size:20px">&#x1F527;</text>
+    <text x="50" y="45" text-anchor="middle" class="desc">DevOps</text>
+</g>
+
+<g transform="translate(60, 600)">
+    <text x="0" y="0" class="stat-text">Token -43%</text>
+    <text x="140" y="0" class="stat-text">Latency -35%</text>
+    <text x="300" y="0" class="stat-text">Human Intervention 32%&#x2192;7%</text>
+    <text x="580" y="0" class="stat-text">Daily 500K+ orchestrations</text>
+</g>
+
+<path class="arrow-accent" d="M 400 140 L 250 200" />
+<path class="arrow-accent" d="M 560 140 L 715 200" />
+<path class="arrow-path" d="M 250 440 L 250 470" />
+<path class="arrow-path" d="M 715 440 L 715 470" />
+</svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="diagram-modal" id="modal-memoryos">
+            <div class="diagram-modal-content">
+                <div class="diagram-modal-close">&#10005;</div>
+                <div class="diagram-modal-split">
+                    <div class="diagram-modal-left">
+                        <h2 style="color: var(--text); margin-bottom: 1rem;">MemoryOS</h2>
+                        <p style="color: var(--text-muted); font-size: 0.9rem;">Agent Memory System &mdash; Three-layer memory architecture with Memory Router for intent-based routing and auto tiered storage &amp; forgetting.</p>
+                    </div>
+                    <div class="diagram-modal-right">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 680" width="100%" class="memoryos-svg">
+<style>
+.memoryos-svg {
+    background: transparent;
+    font-family: var(--font-body, 'Space Grotesk', sans-serif);
+}
+.memoryos-svg .title { font-family: var(--font-display, 'Archivo Black', sans-serif); font-weight: bold; }
+.memoryos-svg .desc { font-size: 12px; }
+.memoryos-svg .label { font-size: 11px; }
+.memoryos-svg .node-box rect { fill: var(--mos-box-bg); stroke: var(--mos-box-border); stroke-width: 2; rx: 8; }
+.memoryos-svg .node-box text { fill: var(--mos-box-text); }
+.memoryos-svg .frame-box rect { fill: var(--mos-frame-bg); stroke: var(--mos-frame-border); stroke-width: 1.5; stroke-dasharray: 8 4; rx: 12; }
+.memoryos-svg .frame-box text { fill: var(--mos-subtext); font-size: 13px; }
+.memoryos-svg .accent-box rect { fill: var(--mos-accent); stroke: none; rx: 8; }
+.memoryos-svg .accent-box text { fill: var(--mos-bg); font-weight: bold; }
+.memoryos-svg .work-box rect { fill: var(--mos-work-bg); stroke: var(--mos-work-border); stroke-width: 1.5; rx: 6; }
+.memoryos-svg .work-box text { fill: var(--mos-work-text); }
+.memoryos-svg .episodic-box rect { fill: var(--mos-episodic-bg); stroke: var(--mos-episodic-border); stroke-width: 1.5; rx: 6; }
+.memoryos-svg .episodic-box text { fill: var(--mos-episodic-text); }
+.memoryos-svg .semantic-box rect { fill: var(--mos-semantic-bg); stroke: var(--mos-semantic-border); stroke-width: 1.5; rx: 6; }
+.memoryos-svg .semantic-box text { fill: var(--mos-semantic-text); }
+.memoryos-svg .router-box rect { fill: var(--mos-router-bg); stroke: var(--mos-router-border); stroke-width: 2; rx: 8; }
+.memoryos-svg .router-box text { fill: var(--mos-router-text); }
+.memoryos-svg .forget-box rect { fill: var(--mos-forget-bg); stroke: var(--mos-forget-border); stroke-width: 1.5; rx: 6; }
+.memoryos-svg .forget-box text { fill: var(--mos-forget-text); }
+.memoryos-svg .arrow-path { stroke: var(--mos-arrow); stroke-width: 2; fill: none; marker-end: url(#mos-arrowhead); }
+.memoryos-svg .arrow-accent { stroke: var(--mos-accent); stroke-width: 2.5; fill: none; marker-end: url(#mos-arrowhead-accent); }
+.memoryos-svg .stat-text { fill: var(--mos-accent); font-weight: bold; font-size: 13px; }
+.memoryos-svg .sub-text { fill: var(--mos-subtext); font-size: 11px; }
+</style>
+<defs>
+    <marker id="mos-arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+        <polygon points="0 0, 10 3.5, 0 7" fill="var(--mos-arrow)" />
+    </marker>
+    <marker id="mos-arrowhead-accent" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+        <polygon points="0 0, 10 3.5, 0 7" fill="var(--mos-accent)" />
+    </marker>
+    <filter id="mos-glow">
+        <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+        <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+</defs>
+
+<text x="20" y="24" class="sub-text" style="font-size:10px; opacity:0.5">memoryos.arch.v1</text>
+
+<g class="node-box" transform="translate(380, 45)">
+    <rect width="200" height="50" />
+    <text x="100" y="22" text-anchor="middle" style="font-size:20px">&#x1F916;</text>
+    <text x="100" y="42" text-anchor="middle" class="title" style="font-size:13px">Agent Request</text>
+</g>
+
+<g class="router-box" transform="translate(330, 140)" filter="url(#mos-glow)">
+    <rect width="300" height="65" />
+    <text x="150" y="25" text-anchor="middle" class="title" style="font-size:16px">&#x1F500; Memory Router</text>
+    <text x="150" y="48" text-anchor="middle" class="desc">Intent-based routing to memory layer</text>
+</g>
+
+<g class="frame-box">
+    <rect x="30" y="240" width="900" height="200" />
+    <text x="50" y="265" class="title" style="font-size:14px">&#x1F9F1; THREE-LAYER MEMORY ARCHITECTURE</text>
+</g>
+
+<g class="work-box" transform="translate(60, 290)">
+    <rect width="250" height="120" />
+    <text x="125" y="25" text-anchor="middle" style="font-size:22px">&#x26A1;</text>
+    <text x="125" y="50" text-anchor="middle" class="title" style="font-size:14px">Working Memory</text>
+    <text x="125" y="70" text-anchor="middle" class="desc">Sliding Window</text>
+    <text x="125" y="90" text-anchor="middle" class="desc">Recent N turns</text>
+    <text x="125" y="108" text-anchor="middle" class="label">Fast access, volatile</text>
+</g>
+
+<g class="episodic-box" transform="translate(355, 290)">
+    <rect width="250" height="120" />
+    <text x="125" y="25" text-anchor="middle" style="font-size:22px">&#x1F50D;</text>
+    <text x="125" y="50" text-anchor="middle" class="title" style="font-size:14px">Episodic Memory</text>
+    <text x="125" y="70" text-anchor="middle" class="desc">Vector Retrieval</text>
+    <text x="125" y="90" text-anchor="middle" class="desc">Semantic similarity search</text>
+    <text x="125" y="108" text-anchor="middle" class="label">Session-level recall</text>
+</g>
+
+<g class="semantic-box" transform="translate(650, 290)">
+    <rect width="250" height="120" />
+    <text x="125" y="25" text-anchor="middle" style="font-size:22px">&#x1F578;&#xFE0F;</text>
+    <text x="125" y="50" text-anchor="middle" class="title" style="font-size:14px">Semantic Memory</text>
+    <text x="125" y="70" text-anchor="middle" class="desc">Knowledge Graph</text>
+    <text x="125" y="90" text-anchor="middle" class="desc">Entity + relation extraction</text>
+    <text x="125" y="108" text-anchor="middle" class="label">Persistent knowledge</text>
+</g>
+
+<g class="frame-box">
+    <rect x="30" y="470" width="900" height="80" />
+    <text x="50" y="495" class="title" style="font-size:14px">&#x1F4C9; AUTO TIERED STORAGE &amp; FORGETTING</text>
+</g>
+
+<g class="forget-box" transform="translate(60, 505)">
+    <rect width="200" height="30" />
+    <text x="100" y="20" text-anchor="middle" class="desc">Decay scoring</text>
+</g>
+<g class="forget-box" transform="translate(290, 505)">
+    <rect width="200" height="30" />
+    <text x="100" y="20" text-anchor="middle" class="desc">Promotion / Demotion</text>
+</g>
+<g class="forget-box" transform="translate(520, 505)">
+    <rect width="200" height="30" />
+    <text x="100" y="20" text-anchor="middle" class="desc">Compaction &amp; merge</text>
+</g>
+<g class="forget-box" transform="translate(750, 505)">
+    <rect width="160" height="30" />
+    <text x="80" y="20" text-anchor="middle" class="desc">Archival &amp; purge</text>
+</g>
+
+<g transform="translate(60, 590)">
+    <text x="0" y="0" class="stat-text">Hit Rate 61% &#x2192; 92%</text>
+    <text x="220" y="0" class="stat-text">120+ Agent Instances</text>
+    <text x="440" y="0" class="stat-text">20M+ Structured Entries</text>
+</g>
+
+<g class="accent-box" transform="translate(300, 620)">
+    <rect width="360" height="40" />
+    <text x="180" y="26" text-anchor="middle" class="title" style="font-size:14px">&#x1F3E2; Company-wide Agent Platform</text>
+</g>
+
+<path class="arrow-accent" d="M 480 95 L 480 140" />
+<path class="arrow-path" d="M 400 205 L 185 290" />
+<path class="arrow-path" d="M 480 205 L 480 290" />
+<path class="arrow-path" d="M 560 205 L 775 290" />
+<path class="arrow-path" d="M 185 410 L 160 470" />
+<path class="arrow-path" d="M 480 410 L 390 470" />
+<path class="arrow-path" d="M 775 410 L 620 470" />
+<path class="arrow-path" d="M 480 550 L 480 620" />
+</svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="diagram-modal" id="modal-codepilot">
+            <div class="diagram-modal-content">
+                <div class="diagram-modal-close">&#10005;</div>
+                <div class="diagram-modal-split">
+                    <div class="diagram-modal-left">
+                        <h2 style="color: var(--text); margin-bottom: 1rem;">CodePilot</h2>
+                        <p style="color: var(--text-muted); font-size: 0.9rem;">R&amp;D Agent &mdash; ReAct + Plan-and-Execute hybrid reasoning with Self-Reflection and 15 MCP Tools for deep environment awareness.</p>
+                    </div>
+                    <div class="diagram-modal-right">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 700" width="100%" class="codepilot-svg">
+<style>
+.codepilot-svg {
+    background: transparent;
+    font-family: var(--font-body, 'Space Grotesk', sans-serif);
+}
+.codepilot-svg .title { font-family: var(--font-display, 'Archivo Black', sans-serif); font-weight: bold; }
+.codepilot-svg .desc { font-size: 12px; }
+.codepilot-svg .label { font-size: 11px; }
+.codepilot-svg .node-box rect { fill: var(--cdp-box-bg); stroke: var(--cdp-box-border); stroke-width: 2; rx: 8; }
+.codepilot-svg .node-box text { fill: var(--cdp-box-text); }
+.codepilot-svg .frame-box rect { fill: var(--cdp-frame-bg); stroke: var(--cdp-frame-border); stroke-width: 1.5; stroke-dasharray: 8 4; rx: 12; }
+.codepilot-svg .frame-box text { fill: var(--cdp-subtext); font-size: 13px; }
+.codepilot-svg .accent-box rect { fill: var(--cdp-accent); stroke: none; rx: 8; }
+.codepilot-svg .accent-box text { fill: var(--cdp-bg); font-weight: bold; }
+.codepilot-svg .react-box rect { fill: var(--cdp-react-bg); stroke: var(--cdp-react-border); stroke-width: 1.5; rx: 6; }
+.codepilot-svg .react-box text { fill: var(--cdp-react-text); }
+.codepilot-svg .plan-box rect { fill: var(--cdp-plan-bg); stroke: var(--cdp-plan-border); stroke-width: 1.5; rx: 6; }
+.codepilot-svg .plan-box text { fill: var(--cdp-plan-text); }
+.codepilot-svg .reflect-box rect { fill: var(--cdp-reflect-bg); stroke: var(--cdp-reflect-border); stroke-width: 1.5; rx: 6; }
+.codepilot-svg .reflect-box text { fill: var(--cdp-reflect-text); }
+.codepilot-svg .tool-box rect { fill: var(--cdp-tool-bg); stroke: var(--cdp-tool-border); stroke-width: 1.5; rx: 6; }
+.codepilot-svg .tool-box text { fill: var(--cdp-tool-text); }
+.codepilot-svg .scene-box rect { fill: var(--cdp-scene-bg); stroke: var(--cdp-scene-border); stroke-width: 1.5; rx: 6; }
+.codepilot-svg .scene-box text { fill: var(--cdp-scene-text); }
+.codepilot-svg .arrow-path { stroke: var(--cdp-arrow); stroke-width: 2; fill: none; marker-end: url(#cdp-arrowhead); }
+.codepilot-svg .arrow-accent { stroke: var(--cdp-accent); stroke-width: 2.5; fill: none; marker-end: url(#cdp-arrowhead-accent); }
+.codepilot-svg .stat-text { fill: var(--cdp-accent); font-weight: bold; font-size: 13px; }
+.codepilot-svg .sub-text { fill: var(--cdp-subtext); font-size: 11px; }
+</style>
+<defs>
+    <marker id="cdp-arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+        <polygon points="0 0, 10 3.5, 0 7" fill="var(--cdp-arrow)" />
+    </marker>
+    <marker id="cdp-arrowhead-accent" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+        <polygon points="0 0, 10 3.5, 0 7" fill="var(--cdp-accent)" />
+    </marker>
+    <filter id="cdp-glow">
+        <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+        <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+</defs>
+
+<text x="20" y="24" class="sub-text" style="font-size:10px; opacity:0.5">codepilot.arch.v1</text>
+
+<g class="frame-box">
+    <rect x="30" y="40" width="900" height="100" />
+    <text x="50" y="65" class="title" style="font-size:14px">&#x1F3AF; FOUR SCENARIOS</text>
+</g>
+<g class="scene-box" transform="translate(60, 80)">
+    <rect width="190" height="40" />
+    <text x="95" y="25" text-anchor="middle" class="title" style="font-size:12px">&#x1F4CB; Requirement Decomp</text>
+</g>
+<g class="scene-box" transform="translate(270, 80)">
+    <rect width="190" height="40" />
+    <text x="95" y="25" text-anchor="middle" class="title" style="font-size:12px">&#x1F4BB; Code Generation</text>
+</g>
+<g class="scene-box" transform="translate(480, 80)">
+    <rect width="190" height="40" />
+    <text x="95" y="25" text-anchor="middle" class="title" style="font-size:12px">&#x1F50D; Auto CR</text>
+</g>
+<g class="scene-box" transform="translate(690, 80)">
+    <rect width="210" height="40" />
+    <text x="105" y="25" text-anchor="middle" class="title" style="font-size:12px">&#x1F6A8; Fault Diagnosis</text>
+</g>
+
+<g class="frame-box">
+    <rect x="30" y="170" width="900" height="230" />
+    <text x="50" y="195" class="title" style="font-size:14px">&#x1F9E0; HYBRID REASONING: ReAct + Plan-and-Execute</text>
+</g>
+
+<g class="react-box" transform="translate(60, 220)">
+    <rect width="260" height="150" />
+    <text x="130" y="25" text-anchor="middle" style="font-size:22px">&#x1F504;</text>
+    <text x="130" y="50" text-anchor="middle" class="title" style="font-size:14px">ReAct Loop</text>
+    <text x="130" y="72" text-anchor="middle" class="desc">Thought &#x2192; Action &#x2192; Observation</text>
+    <text x="130" y="92" text-anchor="middle" class="desc">Iterative reasoning cycle</text>
+    <text x="130" y="115" text-anchor="middle" class="label">Best for: single-step tasks</text>
+    <text x="130" y="135" text-anchor="middle" class="label">with tool interactions</text>
+</g>
+
+<g class="plan-box" transform="translate(350, 220)">
+    <rect width="260" height="150" />
+    <text x="130" y="25" text-anchor="middle" style="font-size:22px">&#x1F4D0;</text>
+    <text x="130" y="50" text-anchor="middle" class="title" style="font-size:14px">Plan-and-Execute</text>
+    <text x="130" y="72" text-anchor="middle" class="desc">Decompose &#x2192; Sub-task chain</text>
+    <text x="130" y="92" text-anchor="middle" class="desc">Sequential execution plan</text>
+    <text x="130" y="115" text-anchor="middle" class="label">Best for: complex multi-step</text>
+    <text x="130" y="135" text-anchor="middle" class="label">requirements</text>
+</g>
+
+<g class="reflect-box" transform="translate(640, 220)">
+    <rect width="260" height="150" />
+    <text x="130" y="25" text-anchor="middle" style="font-size:22px">&#x1FA9E;</text>
+    <text x="130" y="50" text-anchor="middle" class="title" style="font-size:14px">Self-Reflection</text>
+    <text x="130" y="72" text-anchor="middle" class="desc">Generate &#x2192; Evaluate &#x2192; Correct</text>
+    <text x="130" y="92" text-anchor="middle" class="desc">Iterative self-correction</text>
+    <text x="130" y="115" text-anchor="middle" class="label">Quality gate for all outputs</text>
+    <text x="130" y="135" text-anchor="middle" class="label">Code correctness validation</text>
+</g>
+
+<path class="arrow-path" d="M 320 295 L 350 295" />
+<path class="arrow-path" d="M 610 295 L 640 295" />
+<path class="arrow-accent" d="M 770 370 L 770 400 L 190 400 L 190 370" style="marker-end: url(#cdp-arrowhead-accent)" />
+
+<g class="frame-box">
+    <rect x="30" y="430" width="900" height="120" />
+    <text x="50" y="455" class="title" style="font-size:14px">&#x1F527; MCP TOOLS (15 R&amp;D Tools)</text>
+</g>
+
+<g class="tool-box" transform="translate(60, 475)">
+    <rect width="160" height="50" />
+    <text x="80" y="22" text-anchor="middle" class="title" style="font-size:11px">&#x1F4C2; Repo Indexing</text>
+    <text x="80" y="40" text-anchor="middle" class="desc">AST + semantic</text>
+</g>
+<g class="tool-box" transform="translate(240, 475)">
+    <rect width="160" height="50" />
+    <text x="80" y="22" text-anchor="middle" class="title" style="font-size:11px">&#x1F504; CI/CD Pipeline</text>
+    <text x="80" y="40" text-anchor="middle" class="desc">Build + deploy</text>
+</g>
+<g class="tool-box" transform="translate(420, 475)">
+    <rect width="160" height="50" />
+    <text x="80" y="22" text-anchor="middle" class="title" style="font-size:11px">&#x1F4CA; Monitoring</text>
+    <text x="80" y="40" text-anchor="middle" class="desc">Alerts + metrics</text>
+</g>
+<g class="tool-box" transform="translate(600, 475)">
+    <rect width="160" height="50" />
+    <text x="80" y="22" text-anchor="middle" class="title" style="font-size:11px">&#x1F4DD; Code Review</text>
+    <text x="80" y="40" text-anchor="middle" class="desc">Diff + lint + rules</text>
+</g>
+<g class="tool-box" transform="translate(780, 475)">
+    <rect width="130" height="50" />
+    <text x="65" y="22" text-anchor="middle" class="title" style="font-size:11px">+11 more</text>
+    <text x="65" y="40" text-anchor="middle" class="desc">R&amp;D toolchain</text>
+</g>
+
+<g transform="translate(60, 580)">
+    <text x="0" y="0" class="stat-text">Code Adoption 41%</text>
+    <text x="200" y="0" class="stat-text">CR Coverage 68%</text>
+    <text x="400" y="0" class="stat-text">Fault Time 45min &#x2192; 8min</text>
+</g>
+
+<g class="accent-box" transform="translate(280, 620)">
+    <rect width="400" height="45" />
+    <text x="200" y="28" text-anchor="middle" class="title" style="font-size:14px">&#x2705; Deep Env Awareness + Closed-Loop Ops</text>
+</g>
+
+<path class="arrow-accent" d="M 480 140 L 480 170" />
+<path class="arrow-path" d="M 480 400 L 480 430" />
+<path class="arrow-path" d="M 480 550 L 480 620" />
+</svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer class="cv-footer">v0.1 &middot; Generated by AI Skill</footer>
+    </main>
+
+    <script>
+document.addEventListener('DOMContentLoaded', () => {
+    
+    const themeBtns = document.querySelectorAll('.theme-btn');
+    const htmlElement = document.documentElement;
+
+    const savedTheme = localStorage.getItem('cv-theme') || 'bold-signal';
+    setTheme(savedTheme);
+
+    themeBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const targetTheme = btn.getAttribute('data-target');
+            setTheme(targetTheme);
+        });
+    });
+
+    function setTheme(themeName) {
+        htmlElement.setAttribute('data-theme', themeName);
+        localStorage.setItem('cv-theme', themeName);
+        themeBtns.forEach(btn => {
+            if(btn.getAttribute('data-target') === themeName) {
+                btn.classList.add('active');
+            } else {
+                btn.classList.remove('active');
+            }
+        });
+    }
+
+    const layoutBtns = document.querySelectorAll('.layout-btn');
+    const savedLayout = localStorage.getItem('cv-layout') || 'double';
+    setLayout(savedLayout);
+
+    layoutBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const targetLayout = btn.getAttribute('data-layout');
+            setLayout(targetLayout);
+        });
+    });
+
+    function setLayout(layoutName) {
+        htmlElement.setAttribute('data-layout', layoutName);
+        localStorage.setItem('cv-layout', layoutName);
+        layoutBtns.forEach(btn => {
+            if(btn.getAttribute('data-layout') === layoutName) {
+                btn.classList.add('active');
+            } else {
+                btn.classList.remove('active');
+            }
+        });
+    }
+
+    const observerOptions = {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.1
+    };
+
+    const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                const childReveals = entry.target.querySelectorAll('.reveal');
+                childReveals.forEach((child, index) => {
+                    setTimeout(() => {
+                        child.classList.add('visible');
+                    }, index * 100); 
+                });
+            }
+        });
+    }, observerOptions);
+
+    document.querySelectorAll('.reveal').forEach(el => {
+        observer.observe(el);
+    });
+
+    setTimeout(() => {
+        document.querySelector('.header').classList.add('visible');
+    }, 100);
+
+    const WATERMARK_STORAGE_KEY = 'cv-watermark-recipient';
+    const WATERMARK_ATTR = 'data-watermark-id';
+
+    function encodeToZeroWidth(str) {
+        const ZW_CHARS = ['\u200B', '\u200C', '\u200D', '\uFEFF'];
+        return str.split('').map(ch => {
+            const code = ch.charCodeAt(0);
+            return code.toString(4).padStart(8, '0').split('').map(d => ZW_CHARS[parseInt(d)]).join('');
+        }).join('');
+    }
+
+    function generateVisibleWatermark(text) {
+        const overlay = document.querySelector('.watermark-overlay');
+        if (!overlay) return;
+        overlay.innerHTML = '';
+        const cols = Math.ceil(window.innerWidth / 280);
+        const rows = Math.ceil(window.innerHeight / 180);
+        for (let r = 0; r < rows + 4; r++) {
+            for (let c = 0; c < cols + 2; c++) {
+                const span = document.createElement('span');
+                span.className = 'watermark-text';
+                span.textContent = text;
+                span.style.left = (c * 280 - 80 + (r % 2) * 140) + 'px';
+                span.style.top = (r * 180 - 40) + 'px';
+                overlay.appendChild(span);
+            }
+        }
+    }
+
+    function injectSteganography(text) {
+        removeSteganography();
+        const timestamp = new Date().toISOString().slice(0, 10);
+        const payload = 'CV:' + text + ':' + timestamp;
+        const encodedPayload = encodeToZeroWidth(payload);
+        const walker = document.createTreeWalker(
+            document.querySelector('.page-container') || document.body,
+            NodeFilter.SHOW_TEXT,
+            {
+                acceptNode: function(node) {
+                    const parent = node.parentElement;
+                    if (!parent) return NodeFilter.FILTER_REJECT;
+                    if (parent.closest('.watermark-overlay, .theme-switcher, script, style')) return NodeFilter.FILTER_REJECT;
+                    if (node.textContent.trim().length < 2) return NodeFilter.FILTER_REJECT;
+                    return NodeFilter.FILTER_ACCEPT;
+                }
+            }
+        );
+        const textNodes = [];
+        while (walker.nextNode()) textNodes.push(walker.currentNode);
+        textNodes.forEach(node => {
+            const marker = document.createElement('span');
+            marker.className = 'watermark-zw-marker';
+            marker.setAttribute(WATERMARK_ATTR, '');
+            marker.textContent = encodedPayload;
+            node.parentNode.insertBefore(marker, node);
+        });
+    }
+
+    function removeSteganography() {
+        document.querySelectorAll('[' + WATERMARK_ATTR + ']').forEach(el => el.remove());
+    }
+
+    function injectHtmlComment(text) {
+        removeHtmlComment();
+        const timestamp = new Date().toISOString().slice(0, 10);
+        const comment = document.createComment(' WATERMARK: recipient=' + text + ' date=' + timestamp + ' ');
+        document.body.insertBefore(comment, document.body.firstChild);
+    }
+
+    function removeHtmlComment() {
+        const children = document.body.childNodes;
+        for (let i = 0; i < children.length; i++) {
+            if (children[i].nodeType === 8 && children[i].textContent.includes('WATERMARK:')) {
+                children[i].remove();
+                break;
+            }
+        }
+    }
+
+    function injectPdfWatermark(text) {
+        let existing = document.querySelector('.watermark-pdf-tag');
+        if (existing) existing.remove();
+        const timestamp = new Date().toISOString().slice(0, 10);
+        const tag = document.createElement('div');
+        tag.className = 'watermark-pdf-tag';
+        tag.textContent = 'ID:' + text + '|' + timestamp;
+        document.body.appendChild(tag);
+        const titleEl = document.querySelector('title');
+        if (titleEl) {
+            const base = titleEl.textContent.replace(/\s*\|\s*wm:[^|]*$/, '');
+            titleEl.textContent = base + ' | wm:' + text;
+        }
+    }
+
+    function removePdfWatermark() {
+        const el = document.querySelector('.watermark-pdf-tag');
+        if (el) el.remove();
+    }
+
+    function processHash() {
+        const hashRecipient = decodeURIComponent(
+            (window.location.hash.match(/wm=([^&]+)/) || [])[1] || ''
+        );
+        if (hashRecipient) {
+            localStorage.setItem(WATERMARK_STORAGE_KEY, hashRecipient);
+            history.replaceState(null, '', window.location.pathname + window.location.search);
+        }
+
+        const clearFlag = window.location.hash.includes('wm=clear');
+        if (clearFlag) {
+            localStorage.removeItem(WATERMARK_STORAGE_KEY);
+            removeWatermark();
+            history.replaceState(null, '', window.location.pathname + window.location.search);
+            return;
+        }
+
+        const recipient = localStorage.getItem(WATERMARK_STORAGE_KEY) || '';
+        if (recipient) {
+            applyWatermark(recipient);
+        }
+    }
+
+    function initWatermark() {
+        processHash();
+        window.addEventListener('hashchange', () => {
+            removeWatermark();
+            processHash();
+        });
+    }
+
+    function applyWatermark(recipient) {
+        generateVisibleWatermark(recipient);
+        injectSteganography(recipient);
+        injectHtmlComment(recipient);
+        injectPdfWatermark(recipient);
+        const existingMeta = document.querySelector('meta[name="x-watermark"]');
+        if (!existingMeta) {
+            const meta = document.createElement('meta');
+            meta.name = 'x-watermark';
+            meta.content = recipient;
+            document.head.appendChild(meta);
+        } else {
+            existingMeta.content = recipient;
+        }
+    }
+
+    function removeWatermark() {
+        const overlay = document.querySelector('.watermark-overlay');
+        if (overlay) overlay.innerHTML = '';
+        removeSteganography();
+        removeHtmlComment();
+        removePdfWatermark();
+        const meta = document.querySelector('meta[name="x-watermark"]');
+        if (meta) meta.remove();
+    }
+
+    window.addEventListener('resize', () => {
+        const recipient = localStorage.getItem(WATERMARK_STORAGE_KEY);
+        if (recipient) generateVisibleWatermark(recipient);
+    });
+
+    initWatermark();
+
+    document.querySelectorAll('.diagram-trigger').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const modalId = btn.getAttribute('data-modal');
+            const modal = document.getElementById(modalId);
+            if (modal) modal.classList.add('active');
+        });
+    });
+    document.querySelectorAll('.diagram-modal').forEach(modal => {
+        const closeBtn = modal.querySelector('.diagram-modal-close');
+        if (closeBtn) {
+            closeBtn.addEventListener('click', () => modal.classList.remove('active'));
+        }
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) modal.classList.remove('active');
+        });
+    });
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            document.querySelectorAll('.diagram-modal.active').forEach(m => m.classList.remove('active'));
+        }
+    });
+
+    });
+    </script>
+</body>
+</html>

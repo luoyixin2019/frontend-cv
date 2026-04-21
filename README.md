@@ -1,10 +1,10 @@
+English | [中文](./README_CN.md)
+
 # Frontend CV
 
 A universal AI agent skill for generating advanced, print-friendly, multi-theme HTML resumes from structured Markdown files. Works with Trae IDE, Claude Code, and other agent platforms.
 
-<p align="center">
-  <img src="docs/record.gif" width="80%" alt="Demo">
-</p>
+https://github.com/user-attachments/assets/de22aed7-0187-4213-83d0-a3f8182fae12
 
 ## What This Does
 
@@ -12,12 +12,12 @@ Frontend CV converts a set of structured Markdown files (or pasted text) into a 
 
 It supports **3 distinctive themes**, **auto-generated SVG architecture diagrams** for project experience, and **single/double column layout** switching.
 
-### Bold Signal | Terminal Green | Editorial
+### Bold Signal | Editorial | Terminal Green
 
 <p align="center">
-  <img src="docs/theme-bold-signal.png" width="30%" alt="Bold Signal Theme">
-  <img src="docs/theme-terminal-green.png" width="30%" alt="Terminal Green Theme">
-  <img src="docs/theme-editorial.png" width="30%" alt="Editorial Theme">
+  <img src="https://github.com/user-attachments/assets/9a87ab23-b432-477a-af54-49bd07a629d7" width="30%" alt="Bold Signal Theme">
+  <img src="https://github.com/user-attachments/assets/de1e856a-2265-458b-a5dd-29d8704e3280" width="30%" alt="Editorial Theme">
+  <img src="https://github.com/user-attachments/assets/9452222a-24f1-489b-bf4b-790e55b3282e" width="30%" alt="Terminal Green Theme">
 </p>
 
 ## Key Features
@@ -58,9 +58,19 @@ git clone https://github.com/luoyixin2019/frontend-cv.git ~/.claude/skills/front
 
 Then invoke it by typing `/frontend-cv` in Claude Code.
 
-### For Other Agents (Cursor, Windsurf, etc.)
+### Other AI Coding Agents (Cursor, Windsurf, etc.)
 
-Copy `SKILL.md` and the `template/` directory to your agent's skill/rules directory, then reference it in your agent's configuration. The skill uses only relative paths and standard tool descriptions (Read, Write, LS), so it works with any agent that supports skill files.
+Copy the `SKILL.md` and `template/` directory to your agent's custom rules/skills folder, and reference them in your prompts. The skill uses only relative paths and standard tool descriptions, making it compatible with any agent that supports file reading/writing.
+
+### No-Code Conversational Setup (Coze)
+
+**For Non-Programmers:** You don't need a coding IDE to use this! You can use Coze to build your personal resume generator with just one prompt.
+
+Just copy and paste this into the Coze chat:
+
+> "I want to create a resume. Please act as the resume generator defined in this GitHub repository: https://github.com/luoyixin2019/frontend-cv. Read its SKILL.md for your behavior rules, and use the files in its `template/` directory to generate my `resume.html`. Here is my personal information..."
+
+The AI will read the repository, process your information, and output a complete, beautifully designed `resume.html` file for you to download.
 
 ## Usage
 
@@ -69,7 +79,7 @@ Copy `SKILL.md` and the `template/` directory to your agent's skill/rules direct
 ```
 /frontend-cv
 
-> "Generate my resume from ./src/demo/"
+> "Generate my resume from ./src/demo/en/"
 ```
 
 The skill will:
@@ -85,13 +95,13 @@ The skill will:
 Provide resume data in one of two ways:
 
 - **Paste content** — Directly paste resume text in the chat
-- **File/folder path** — Provide a path to a `.txt`, `.md`, `.html` file, or a folder containing:
-  - `basics.md` — Name, contact, experience, level, tech stack
-  - `education-experience.md` — Education history
-  - `working-experience.md` — Work history
-  - `project-experience.md` — Project details
+- **File/folder path** — Provide a path to a `.txt`, `.md`, `.html` file, or a folder containing multiple markdown files. The AI will automatically read and organize the contents, which typically include:
+  - **Basics** — Name, contact, years of experience, current level, tech stack
+  - **Education** — Degrees, schools, graduation years
+  - **Work Experience** — Companies, roles, durations, and achievements
+  - **Project Experience** — Key projects, architecture, and personal contributions
 
-See `src/demo/` for an example.
+See `src/demo/en/` for an example.
 
 ## Included Themes
 
@@ -125,49 +135,37 @@ frontend-cv/
 │   └── script.js                 # Theme/layout switcher + animations
 ├── scripts/
 │   ├── screenshot.js             # Capture theme preview screenshots
-│   ├── export-pdf.sh             # Export resume to PDF
-│   └── deploy.sh                 # Deploy resume to Vercel URL
-├── docs/                         # Theme preview images
+│   └── demo-video.js             # Generate demo videos
 ├── src/
 │   └── demo/                     # Example resume data
-│       ├── basics.md
-│       ├── education-experience.md
-│       ├── working-experience.md
-│       ├── project-experience.md
-│       └── proj_svg/             # Generated architecture diagrams
+│       ├── en/                   # English demo
+│       │   ├── basics.md
+│       │   ├── project-experience.md
+│       │   └── ...
+│       └── zh/                   # Chinese demo
 └── res/
-    └── demo/
-        └── resume.html           # Generated output
+    └── demo/                     # Generated outputs
+        ├── en/resume_en.html
+        └── zh/resume_zh.html
 ```
 
 ## Sharing Your Resume
 
-After generating a resume, two scripts are available for sharing:
+After generating your resume, you have two simple ways to share it:
 
-### Export to PDF
+### 1. Print to PDF
 
-Convert your resume to a PDF for email, Slack, or printing:
+Just click the **"Print" button in the top right corner** of the resume (or press `Ctrl+P`). 
+The resume includes dedicated `@media print` styles to ensure perfect layout, automatically hide interactive buttons, and produce a clean PDF document.
+*Note: For best results, set Margins to "None" and check "Background graphics" in your print dialog.*
 
-```bash
-bash scripts/export-pdf.sh ./res/demo/resume.html
-bash scripts/export-pdf.sh ./resume.html ./my-resume.pdf
-```
+### 2. Share the HTML File Directly
 
-Uses Playwright to render the page and export as A4 PDF. Installs automatically if needed. Animations are not preserved (static snapshot).
-
-### Deploy to a Live URL
-
-Deploy your resume to a permanent, shareable URL that works on any device:
-
-```bash
-bash scripts/deploy.sh ./res/demo/resume.html
-```
-
-Uses Vercel (free tier). The script walks you through signup and login if it's your first time.
+Because Frontend CV generates a **100% self-contained HTML file** (with all CSS, JS, and SVG diagrams embedded inline), you can simply send the `resume.html` file to anyone via email or chat. They can double-click it to view the fully interactive resume in any browser, offline. No folders, no assets to attach.
 
 ## Philosophy
 
-- **Single file, zero maintenance.** A self-contained HTML file will work in 10 years. A React project from 2019? Good luck.
+- **Single file, zero maintenance.** A self-contained HTML file is the ultimate resume format. Unlike a Word document, its layout will never break when opened on different devices. Unlike a static PDF, it supports interactive layouts, scroll animations, and modal architecture diagrams. And best of all, it will still render perfectly in any browser 10 years from now.
 - **Design by reaction, not description.** Switch themes with one click and pick what feels right.
 - **Architecture diagrams tell the story.** A well-crafted SVG diagram communicates more than paragraphs of text.
 - **Print is not an afterthought.** Resumes are meant to be printed. Dedicated print styles ensure clean output.
@@ -176,8 +174,6 @@ Uses Vercel (free tier). The script walks you through signup and login if it's y
 ## Requirements
 
 - An AI agent that supports skill files (Trae IDE, Claude Code, Cursor, etc.)
-- For PDF export: Node.js + Playwright (installs automatically)
-- For URL deployment: Node.js + Vercel account (free)
 
 ## License
 

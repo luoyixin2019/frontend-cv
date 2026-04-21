@@ -21,6 +21,10 @@ This skill accepts resume data from two sources (user chooses at runtime):
 - **Pasted content:** User directly pastes resume text in the chat.
 - **File/folder path:** User provides a path to a `.txt`, `.md`, `.html` file, or a folder containing multiple markdown files (conventionally named `basics.md`, `education-experience.md`, `working-experience.md`, `project-experience.md`).
 
+Source markdown files are organized by language under `src/`:
+- `src/demo/zh/` — Chinese resume source files
+- `src/demo/en/` — English resume source files
+
 Regardless of the source, the content is parsed into four logical sections:
 - **Basics:** Name, contact, experience, level, tech stack.
 - **Education Experience:** Education history.
@@ -110,6 +114,12 @@ When invoked, perform the following steps:
    **SVG DIAGRAM CSS REQUIREMENT:**
    - When SVG diagrams are present, their per-theme CSS variable definitions MUST be included in the `<style>` block of the HTML (embedded from `style.css` which already contains the SVG adaptation rules for known diagram types).
    - For newly generated diagram types, append their CSS variable definitions (with defaults and per-theme overrides) to the `<style>` block, following the same pattern as the existing SVG adaptation sections in `style.css`.
+
+   **WATERMARK SYSTEM:**
+   - The HTML MUST include a `<div class="watermark-overlay"></div>` immediately after `<body>` opening tag. This is the container for visible diagonal watermark text.
+   - There is NO visible UI button for watermark control. The watermark is set via URL hash parameter: append `#wm=<recipient>` to the URL (e.g., `resume.html#wm=字节跳动`). The hash is consumed and removed from the URL after processing. To clear: use `#wm=clear`.
+   - The watermark system is entirely JS-driven (defined in `script.js`): it generates visible diagonal watermarks, invisible zero-width-character steganography in text nodes, HTML comment markers, meta tags, and a PDF-friendly invisible text tag.
+   - No additional HTML markup is needed beyond the overlay div.
 
    **CRITICAL JS/CSS INCLUSION:** Embed the exact contents of `style.css` into a `<style>` tag in the `<head>`, and the exact contents of `script.js` into a `<script>` tag just before the closing `</body>` tag. This ensures the output is a portable, single-file HTML resume without external dependencies.
 
